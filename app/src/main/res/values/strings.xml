@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="boardingBtn">Get started</string>
+    <string name="boardingTitle">Hey, I\'m Ticky!</string>
+    <string name="boardingText">I know you’ve got many things to do but I’m here to help you organize</string>
+
+    <!-- Home Page -->
+    <string name="date">July, 2022</string>
+    <string name="addBtn">New task</string>
+
+
+
+</resources>

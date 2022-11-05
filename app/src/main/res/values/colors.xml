@@ -12,5 +12,6 @@
     <color name="custom_color_primary">#F2F4F5</color>
     <color name="custom_color_dark">#1E212B</color>
     <color name="calendar">#C5D6E012</color>
+    <color name="custom_weeks">#4D1F222C</color>
 
 </resources>

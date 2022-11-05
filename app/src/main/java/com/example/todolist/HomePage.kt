@@ -22,6 +22,16 @@ class HomePage : Fragment() {
         return binding.root
 
 
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.tuesday.setOnClickListener {
+            binding.tuesday.setBackgroundResource(R.drawable.ic_rectangle)
+        }
+
     }
 
     override fun onDestroyView() {

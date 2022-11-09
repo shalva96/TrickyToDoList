@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 //            .beginTransaction()
 //            .replace(R.id.placeHolder, EmptyHomeFragment.newInstance())
 //            .commit()
-//    }
+///    }
 
 
     private fun openFrag(f: Fragment, idHolder: Int) {

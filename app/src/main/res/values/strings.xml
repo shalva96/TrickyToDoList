@@ -7,7 +7,11 @@
     <!-- Home Page -->
     <string name="date">July, 2022</string>
     <string name="addBtn">New task</string>
+    <string name="to_do">To do</string>
+    <string name="sort_by">sort by</string>
 
+    <!-- Empty Page -->
+    <string name="empty">Add some tasks, don\'t make me bored</string>
 
 
 </resources>

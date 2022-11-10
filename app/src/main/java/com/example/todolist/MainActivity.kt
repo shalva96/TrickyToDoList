@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
             openFrag(EmptyHomeFragment.newInstance(), R.id.placeHolder)
         }
 
+
+
     }
 
 

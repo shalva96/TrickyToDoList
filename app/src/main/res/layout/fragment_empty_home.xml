@@ -69,13 +69,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_rectangle"
+                    android:background="@drawable/ic_rectangle_white"
                     android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/firstDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -86,6 +87,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dayOne"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -109,6 +111,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/secondDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -119,6 +122,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dayTwo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -142,6 +146,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/threeDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -152,6 +157,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dayThree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -175,6 +181,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fourDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -185,6 +192,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dayFour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -208,6 +216,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fiveDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -218,6 +227,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dayFive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -241,6 +251,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/sixDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -251,6 +262,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/daySix"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -274,6 +286,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/sevenDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -284,6 +297,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/daySeven"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

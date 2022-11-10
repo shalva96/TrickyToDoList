@@ -15,5 +15,8 @@
     <color name="custom_weeks">#4D1F222C</color>
     <color name="custom_color_sort">#B9C8CF</color>
 
+    <!-- Calendar Colors -->
+    <color name="custom_color_active_day">#32CCFF</color>
+
 
 </resources>

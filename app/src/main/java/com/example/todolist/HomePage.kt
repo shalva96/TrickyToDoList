@@ -15,15 +15,15 @@ class HomePage : Fragment() {
 
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: HomePageAdapter
     private val monthAndYear = SimpleDateFormat("MMM yyyy")
-    private val topCalendar: String = monthAndYear.format(Date())
-
+    private val topCalendar: String = monthAndYear.format(Date()) // Current Month and Year
     private val day = SimpleDateFormat("d")
-    private val date: String = day.format(Date())
-    private var nextDay = date.toInt()
-    private val weekDay = SimpleDateFormat("EEEE")
-    private val week: String = weekDay.format(Date())
+    private val date: String = day.format(Date()) // Current Day and Date
+    private val calendar: Calendar = Calendar.getInstance()
+    private val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH) // Live month days
+    private val weekDays = calendar.get(7) // Week days
+    private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
+    private var prevMonthDays = 0
 
 
     override fun onCreateView(
@@ -42,90 +42,251 @@ class HomePage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        when(prevMonth){
+            0 -> prevMonthDays = 31
+            1 -> prevMonthDays = 31
+            2 -> {
+                if (calendar.get(1) % 4 == 0) {
+                    prevMonthDays = 29
+                } else {
+                    prevMonthDays = 28
+                }
+            } // MARCH End
+            3 -> prevMonthDays = 31
+            4 -> prevMonthDays = 30
+            5 -> prevMonthDays = 31
+            6 -> prevMonthDays = 30
+            7 -> prevMonthDays = 31
+            8 -> prevMonthDays = 31
+            9 -> prevMonthDays = 30
+            10 -> prevMonthDays = 31
+            11 -> prevMonthDays = 30
+
+        }
+
+        binding.calendarDate.text = topCalendar
+
         binding.apply {
-
-            calendarDate.text = topCalendar.format(Date())
-
-            if (week.format(Date()) == "Monday" || week.format(Date()) == "понедельник") {
+            if (weekDays == 2) {
                 firstDay.text = "M"
                 monday.setBackgroundResource(R.drawable.ic_rectangle)
                 firstDay.setTextColor(R.color.custom_color_active_day)
-                dayOne.text = date.format(Date())
-                dayTwo.text = (++nextDay).toString()
-                dayThree.text = (nextDay + 2).toString()
-                dayFour.text = (nextDay + 3).toString()
-                dayFive.text = (nextDay + 4).toString()
-                daySix.text = (nextDay + 5).toString()
-                daySeven.text = (nextDay + 6).toString()
-            } else if (week.format(Date()) == "Tuesday" || week.format(Date()) == "вторник") {
+                var firstDay = date.format(Date()).toInt()
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays
+                }
+                dayOne.text = firstDay.toString()
+                if (firstDay == daysInMonth ) firstDay = 0
+                dayTwo.text = (++firstDay).toString()
+                if (firstDay == daysInMonth ) firstDay = 0
+                dayThree.text = (++firstDay).toString()
+                if (firstDay == daysInMonth ) firstDay = 0
+                dayFour.text = (++firstDay).toString()
+                if (firstDay == daysInMonth) firstDay = 0
+                dayFive.text = (++firstDay).toString()
+                if (firstDay == daysInMonth) firstDay = 0
+                daySix.text = (++firstDay).toString()
+                if (firstDay == daysInMonth) firstDay = 0
+                daySeven.text = (++firstDay).toString()
+            } else if (weekDays == 3) {
                 secondDay.text = "T"
                 secondDay.setTextColor(R.color.custom_color_active_day)
                 tuesday.setBackgroundResource(R.drawable.ic_rectangle)
-                dayOne.text = (nextDay--).toString()
-                dayTwo.text = date.format(Date())
-                dayThree.text = (nextDay + 2).toString()
-                dayFour.text = (nextDay + 3).toString()
-                dayFive.text = (nextDay + 4).toString()
-                daySix.text = (nextDay + 5).toString()
-                daySeven.text = (nextDay + 6).toString()
-            } else if (week.format(Date()) == "Wednesday" || week.format(Date()) == "среда") {
+                var firstDay = date.format(Date()).toInt() - 1
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays
+                }
+                dayOne.text = firstDay.toString()
+                if (firstDay == daysInMonth || firstDay == prevMonthDays) firstDay = 0
+                dayTwo.text = (++firstDay).toString()
+                if (firstDay == daysInMonth || firstDay == prevMonthDays) firstDay = 0
+                dayThree.text = (++firstDay).toString()
+                if (firstDay == daysInMonth || firstDay == prevMonthDays) firstDay = 0
+                dayFour.text = (++firstDay).toString()
+                if (firstDay == daysInMonth || firstDay == prevMonthDays) firstDay = 0
+                dayFive.text = (++firstDay).toString()
+                if (firstDay == daysInMonth || firstDay == prevMonthDays) firstDay = 0
+                daySix.text = (++firstDay).toString()
+                if (firstDay == daysInMonth || firstDay == prevMonthDays) firstDay = 0
+                daySeven.text = (++firstDay).toString()
+            } else if (weekDays == 4) {
                 threeDay.text = "W"
                 threeDay.setTextColor(R.color.custom_color_active_day)
                 wednesday.setBackgroundResource(R.drawable.ic_rectangle)
-                dayOne.text = (nextDay - 2).toString()
-                dayTwo.text = (nextDay--).toString()
-                dayThree.text = date.format(Date())
-                dayFour.text = (nextDay + 2).toString()
-                dayFive.text = (nextDay + 3).toString()
-                daySix.text = (nextDay + 4).toString()
-                daySeven.text = (nextDay + 5).toString()
-            } else if (week.format(Date()) == "Thursday" || week.format(Date()) == "четверг") {
+                var firstDay = date.format(Date()).toInt() - 2
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays - 1
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }else {
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }
+
+            } else if (weekDays == 5) {
                 fourDay.text = "T"
                 fourDay.setTextColor(R.color.custom_color_active_day)
                 thursday.setBackgroundResource(R.drawable.ic_rectangle)
                 fourDay.setTextColor(R.color.custom_color_active_day)
-                dayOne.text = (nextDay - 3).toString()
-                dayTwo.text = (nextDay - 2).toString()
-                dayThree.text = (--nextDay).toString()
-                dayFour.text = date.format(Date())
-                dayFive.text = (nextDay + 2).toString()
-                daySix.text = (nextDay + 3).toString()
-                daySeven.text = (nextDay + 4).toString()
-            } else if (week.format(Date()) == "Friday" || week.format(Date()) == "пятница") {
+                var firstDay = date.format(Date()).toInt() - 3
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays - 2
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }else {
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }
+            } else if (weekDays == 6) {
                 fiveDay.text = "F"
                 fiveDay.setTextColor(R.color.custom_color_active_day)
                 friday.setBackgroundResource(R.drawable.ic_rectangle)
-                dayOne.text = (nextDay - 4).toString()
-                dayTwo.text = (nextDay - 3).toString()
-                dayThree.text = (nextDay - 2).toString()
-                dayFour.text = (nextDay--).toString()
-                dayFive.text = date.format(Date())
-                daySix.text = (nextDay + 2).toString()
-                daySeven.text = (nextDay + 3).toString()
-            } else if (week.format(Date()) == "Saturday" || week.format(Date()) == "суббота") {
+                var firstDay = date.format(Date()).toInt() - 4
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays - 3
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }else {
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }
+            } else if (weekDays == 7) {
                 sixDay.text = "S"
                 sixDay.setTextColor(R.color.custom_color_active_day)
                 saturday.setBackgroundResource(R.drawable.ic_rectangle)
-                dayOne.text = (nextDay - 5).toString()
-                dayTwo.text = (nextDay - 4).toString()
-                dayThree.text = (nextDay - 3).toString()
-                dayFour.text = (nextDay - 2).toString()
-                dayFive.text = (nextDay--).toString()
-                daySix.text = date.format(Date())
-                daySeven.text = (nextDay + 2).toString()
-            } else if (week.format(Date()) == "Sunday" || week.format(Date()) == "воскресенье") {
+                var firstDay = date.format(Date()).toInt() - 5
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays - 4
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }else {
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }
+            } else if (weekDays == 1) {
                 sevenDay.text = "S"
                 sevenDay.setTextColor(R.color.custom_color_active_day)
                 sunday.setBackgroundResource(R.drawable.ic_rectangle)
-                dayOne.text = (nextDay - 6).toString()
-                dayTwo.text = (nextDay - 5).toString()
-                dayThree.text = (nextDay - 4).toString()
-                dayFour.text = (nextDay - 3).toString()
-                dayFive.text = (nextDay - 2).toString()
-                daySix.text = (nextDay--).toString()
-                daySeven.text = date.format(Date())
+                var firstDay = date.format(Date()).toInt() - 6
+                if (firstDay <= 0) {
+                    firstDay = prevMonthDays - 5
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }else {
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == daysInMonth) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }
             }
-
         }
 
     }

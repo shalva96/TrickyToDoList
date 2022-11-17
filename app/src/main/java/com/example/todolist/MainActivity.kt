@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         dataModel.openFragEmptyFragment.observe(this) {
-            sharedPref.saveValue(true)
             openFrag(EmptyHomeFragment.newInstance(), R.id.placeHolder)
         }
 
@@ -39,15 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
-
-//    private fun emptyHomePage() {
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(R.id.placeHolder, EmptyHomeFragment.newInstance())
-//            .commit()
-//    }
 
 
     private fun openFrag(f: Fragment, idHolder: Int) {

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.databinding.FragmentOnboardingBinding
+import com.example.todolist.sharedPref.SharedPref
 
 
 class OnboardingFragment : Fragment() {
@@ -15,6 +16,7 @@ class OnboardingFragment : Fragment() {
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
+    private lateinit var sharedPref: SharedPref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +29,10 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref = SharedPref(requireContext())
 
         binding.onboardingBtn.setOnClickListener {
+                sharedPref.saveValue(true)
                 dataModel.openFragEmptyFragment.value = true
         }
 
@@ -43,7 +47,6 @@ class OnboardingFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance() = OnboardingFragment()
     }
 

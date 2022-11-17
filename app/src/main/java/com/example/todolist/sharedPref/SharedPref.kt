@@ -18,5 +18,4 @@ class SharedPref(context: Context) {
         return myPref.getBoolean(KEY, false)
     }
 
-
 }

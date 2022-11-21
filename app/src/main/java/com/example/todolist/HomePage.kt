@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.todolist.Adapter.HomePageAdapter
+import androidx.fragment.app.activityViewModels
+import com.example.todolist.DataClass.DataModel
 import com.example.todolist.databinding.FragmentHomePageBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,6 +16,9 @@ class HomePage : Fragment() {
 
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
+    private val dataModel: DataModel by activityViewModels()
+
+    //Calendar
     private val monthAndYear = SimpleDateFormat("MMM yyyy")
     private val topCalendar: String = monthAndYear.format(Date()) // Current Month and Year
     private val day = SimpleDateFormat("d")
@@ -46,7 +50,7 @@ class HomePage : Fragment() {
             0 -> prevMonthDays = 31
             1 -> prevMonthDays = 31
             2 -> {
-                if (calendar.get(1) % 4 == 0) {
+                if (calendar.get(1) % 4 == 0 || calendar.get(1) % 100 == 0 && calendar.get(1) % 400 == 0) {
                     prevMonthDays = 29
                 } else {
                     prevMonthDays = 28
@@ -287,6 +291,12 @@ class HomePage : Fragment() {
                     daySeven.text = (++firstDay).toString()
                 }
             }
+        }// Calendar End!!!
+
+
+
+        binding.homeNewTask.setOnClickListener {
+            dataModel.newTaskFromHomePage.value = true
         }
 
     }

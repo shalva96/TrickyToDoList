@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         sharedPref = SharedPref(this)
         if (sharedPref.getValue()) {
-            openFrag(EmptyHomeFragment.newInstance(), R.id.placeHolder)
+            openFrag(HomePage.newInstance(), R.id.placeHolder)
         }else {
             sharedPref.saveValue(true)
             openFrag(OnboardingFragment.newInstance(), R.id.placeHolder)
@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
         dataModel.openFragEmptyFragment.observe(this) {
             openFrag(EmptyHomeFragment.newInstance(), R.id.placeHolder)
+        }
+
+        dataModel.newTaskFromHomePage.observe(this) {
+            openFrag(AddNewTaskFragment.newInstance(), R.id.placeHolder)
         }
 
 

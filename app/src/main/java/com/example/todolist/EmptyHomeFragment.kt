@@ -24,7 +24,7 @@ class EmptyHomeFragment : Fragment() {
     private val topCalendar: String = monthAndYear.format(Date()) // Current Month and Year
     private val day = SimpleDateFormat("d")
     private val date: String = day.format(Date()) // Current Day and Date
-    private val calendar: Calendar = Calendar.getInstance()
+    private val calendar: Calendar = getInstance()
     private val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH) // Live month days
     private val weekDays = calendar.get(7) // Week days
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
@@ -49,7 +49,7 @@ class EmptyHomeFragment : Fragment() {
             0 -> prevMonthDays = 31
             1 -> prevMonthDays = 31
             2 -> {
-                if (calendar.get(1) % 4 == 0) {
+                if (calendar.get(YEAR) % 4 == 0 || calendar.get(YEAR) % 100 == 0 && calendar.get(YEAR) % 400 == 0) {
                     prevMonthDays = 29
                 } else {
                     prevMonthDays = 28
@@ -75,9 +75,6 @@ class EmptyHomeFragment : Fragment() {
                 monday.setBackgroundResource(R.drawable.ic_rectangle)
                 firstDay.setTextColor(R.color.custom_color_active_day)
                 var firstDay = date.format(Date()).toInt()
-                if (firstDay <= 0) {
-                    firstDay = prevMonthDays
-                }
                 dayOne.text = firstDay.toString()
                 if (firstDay == daysInMonth ) firstDay = 0
                 dayTwo.text = (++firstDay).toString()

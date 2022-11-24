@@ -1,14 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/custom_color_primary"
     tools:context=".AddNewTaskFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/backAndCalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="new task" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/backContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/arrowBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_baseline_keyboard_arrow_left_24"
+                app:layout_constraintBottom_toBottomOf="@+id/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/back" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@string/back"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/arrowBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/calendarIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/calendar"
+            app:layout_constraintBottom_toBottomOf="@+id/backContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backContainer" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/choseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/backContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backContainer">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/selectedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="Due 28 Aug."
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/cleanDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/x"
+                app:layout_constraintBottom_toBottomOf="@+id/selectedDate"
+                app:layout_constraintStart_toEndOf="@+id/selectedDate"
+                app:layout_constraintTop_toTopOf="@+id/selectedDate" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Back and calendar -->
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:text="@string/addTv"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/backAndCalendar"
+        app:layout_constraintTop_toBottomOf="@+id/backAndCalendar" />
+
+    <EditText
+        android:id="@+id/AddEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/addEditTv"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/custom_weeks"
+        app:layout_constraintEnd_toEndOf="@+id/backAndCalendar"
+        app:layout_constraintStart_toStartOf="@+id/backAndCalendar"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+
+    <!-- Circle start -->
+    <LinearLayout
+        android:id="@+id/allCircle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="150dp"
+        android:orientation="horizontal"
+        android:weightSum="9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddEditText">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/firsCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/firs_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/secondCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/second_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/threeCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/three_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/fourCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/four_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/fiveCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/five_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/sixCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/six_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/sevenCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/seven_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/eightCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/eight_color" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/nineCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/nine_color" />
+
+    </LinearLayout> <!-- Circle end -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addPageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/allCircle"
+        app:layout_constraintStart_toStartOf="@+id/allCircle"
+        app:layout_constraintEnd_toEndOf="@+id/allCircle">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/x"
+            android:backgroundTint="@color/black"
+            android:layout_marginEnd="70dp"
+            app:layout_constraintEnd_toEndOf="@+id/addPageCancelBtn"
+            app:layout_constraintStart_toStartOf="@+id/addPageCancelBtn"
+            app:layout_constraintTop_toTopOf="@+id/addPageCancelBtn"
+            app:layout_constraintBottom_toBottomOf="@+id/addPageCancelBtn"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/addPageCancelBtn"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/custom_color_dark"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:backgroundTint="@color/custom_color_primary"
+            android:text="Calcel"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addPageSaveBtn"
+            android:layout_width="160dp"
+            android:backgroundTint="@color/custom_color_dark"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:fontFamily="@font/ubuntu_medium"
+            app:cornerRadius="15dp"
+            android:textAllCaps="false"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

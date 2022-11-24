@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.todolist.DataClass.DataModel
+import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.sharedPref.SharedPref
 
@@ -38,6 +39,10 @@ class MainActivity : AppCompatActivity() {
             openFrag(AddNewTaskFragment.newInstance(), R.id.placeHolder)
         }
 
+        dataModel.backFromAddPage.observe(this) {
+            openFrag(HomePage.newInstance(), R.id.placeHolder)
+        }
+
 
 
     }
@@ -50,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             .replace(idHolder, f)
             .commit()
     }
+
 
 
 }

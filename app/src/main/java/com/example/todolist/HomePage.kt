@@ -1,16 +1,24 @@
 package com.example.todolist
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todolist.Adapter.HomePageAdapter
 import com.example.todolist.DataClass.DataModel
+import com.example.todolist.DataClass.HomePageData
+import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.FragmentHomePageBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class HomePage : Fragment() {
 
@@ -30,6 +38,11 @@ class HomePage : Fragment() {
     private var prevMonthDays = 0
 
 
+    private lateinit var adapter: HomePageAdapter
+
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,11 +52,15 @@ class HomePage : Fragment() {
         return binding.root
 
 
+
+
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+
 
 
         when(prevMonth){
@@ -294,7 +311,6 @@ class HomePage : Fragment() {
         }// Calendar End!!!
 
 
-
         binding.homeNewTask.setOnClickListener {
             dataModel.newTaskFromHomePage.value = true
         }
@@ -308,31 +324,45 @@ class HomePage : Fragment() {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance() = HomePage()
     }
 
 
-//    private fun init() {
-//        adapter = HomePageAdapter()
-//        binding.apply {
-//            todoRecyclerView.layoutManager = LinearLayoutManager(this)
-//            todoRecyclerView.adapter = adapter
-//            val list = getItems()
-//            adapter.addItem(list)
-//        }
-//    }
-//
-//    private fun getItems(): ArrayList<HomePageData> {
-//        val homePageDataList = ArrayList<HomePageData>()
-//        homePageDataList.add(HomePageData(
-//            false, "13 sundae alcohol day", "333333", "Due 25 Aug."
-//        ))
-//        homePageDataList.add(HomePageData(
-//            false, "SKTT1 Lose championship", "542f6ew", "Due 06 Oct."
-//        ))
-//        homePageDataList.addAll(homePageDataList)
-//        homePageDataList.addAll(homePageDataList)
-//        return homePageDataList
-//    }
+    private fun init() {
+
+
+            adapter = HomePageAdapter()
+            binding.todoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.todoRecyclerView.adapter = adapter
+            val list = getItems()
+            adapter.addItem(list)
+
+
+
+
+
+    }
+
+    private fun getItems(): ArrayList<HomePageData> {
+        val homePageData = ArrayList<HomePageData>()
+        val db = MainDb.getDb(requireContext())
+        db.getDao().getAllItems().asLiveData().observe(viewLifecycleOwner){ item->
+            item.forEach {
+                homePageData.addAll(
+                    listOf(
+                        HomePageData(
+                            it.checked,
+                            it.text,
+                            it.color,
+                            it.date
+                        )
+                    )
+
+                )
+
+            }
+        }
+
+        return homePageData
+    }
 }

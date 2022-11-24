@@ -12,8 +12,12 @@
 
     <!-- Empty Page -->
     <string name="empty">Add some tasks, don\'t make me bored</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Add New Task -->
+    <string name="back">Back</string>
+    <string name="addTv">Stuff to do</string>
+    <string name="addEditTv">Type your task here</string>
 
 
 </resources>

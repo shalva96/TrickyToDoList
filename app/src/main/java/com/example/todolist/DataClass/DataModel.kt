@@ -15,5 +15,9 @@ open class DataModel: ViewModel() {
         MutableLiveData<Boolean>()
     }
 
+    val backFromAddPage: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
 
 }

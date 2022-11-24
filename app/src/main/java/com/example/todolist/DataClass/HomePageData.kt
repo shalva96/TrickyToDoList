@@ -1,6 +1,5 @@
 package com.example.todolist.DataClass
 
-import android.widget.CheckBox
 import java.io.Serializable
 
 data class HomePageData(

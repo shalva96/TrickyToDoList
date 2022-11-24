@@ -18,5 +18,21 @@
     <!-- Calendar Colors -->
     <color name="custom_color_active_day">#32CCFF</color>
 
+    <!-- Circle colors -->
+    <color name="firs_color">#FF453A</color>
+    <color name="second_color">#FF9F0C</color>
+    <color name="three_color">#FFD50C</color>
+    <color name="four_color">#32D74B</color>
+    <color name="five_color">#64D2FF</color>
+    <color name="six_color">#0984FF</color>
+    <color name="seven_color">#5E5CE6</color>
+    <color name="eight_color">#BF5AF2</color>
+    <color name="nine_color">#FF375F</color>
+
+    <!-- Add task colors -->=
+
+
+
+    <color name="added_item">#202431</color>
 
 </resources>

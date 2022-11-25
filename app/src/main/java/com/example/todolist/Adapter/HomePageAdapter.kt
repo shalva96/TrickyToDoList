@@ -1,5 +1,6 @@
 package com.example.todolist.Adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,9 @@ class HomePageAdapter: RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
     inner class HomePageHolder(view: View): RecyclerView.ViewHolder(view) {
         val binding = ToDoItemBinding.bind(view)
 
+        @SuppressLint("ResourceAsColor")
         fun setData(item: HomePageData) {
             binding.descriptionSample.text = item.description
-            binding.smallCircleSample.setBackgroundColor(item.color.toInt())
             binding.dateSample.text = item.date
         }
     }

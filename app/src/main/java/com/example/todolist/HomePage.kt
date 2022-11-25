@@ -37,6 +37,7 @@ class HomePage : Fragment() {
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
 
+    private var homePages = ArrayList<HomePageData>()
 
     private lateinit var adapter: HomePageAdapter
 
@@ -347,21 +348,22 @@ class HomePage : Fragment() {
         val homePageData = ArrayList<HomePageData>()
         val db = MainDb.getDb(requireContext())
         db.getDao().getAllItems().asLiveData().observe(viewLifecycleOwner){ item->
-            item.forEach {
-                homePageData.addAll(
-                    listOf(
-                        HomePageData(
-                            it.checked,
-                            it.text,
-                            it.color,
-                            it.date
-                        )
+            item.forEach {homePageData.addAll(
+                listOf(
+                    HomePageData(
+                        it.checked,
+                        it.text,
+                        it.color,
+                        it.date
                     )
-
                 )
+            )
 
             }
+            homePages = homePageData
+            adapter.addItem(homePages)
         }
+
 
         return homePageData
     }

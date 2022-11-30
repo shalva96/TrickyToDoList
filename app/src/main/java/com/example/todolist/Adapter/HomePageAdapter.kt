@@ -1,25 +1,29 @@
 package com.example.todolist.Adapter
 
-import android.annotation.SuppressLint
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.DataClass.HomePageData
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
 
-class HomePageAdapter: RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
+class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
 
     private val toDoList = ArrayList<HomePageData>()
 
-    inner class HomePageHolder(view: View): RecyclerView.ViewHolder(view) {
-        val binding = ToDoItemBinding.bind(view)
+    inner class HomePageHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = ToDoItemBinding.bind(view)
 
-        @SuppressLint("ResourceAsColor")
+
         fun setData(item: HomePageData) {
             binding.descriptionSample.text = item.description
             binding.dateSample.text = item.date
+            if (binding.dateSample.text == " ") binding.dateSample.visibility = View.GONE
+            Log.d("MyTag", "${item.color}")
         }
     }
 
@@ -29,6 +33,7 @@ class HomePageAdapter: RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
         return HomePageHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HomePageHolder, position: Int) {
         val currentItem = toDoList[position]
         holder.setData(currentItem)
@@ -43,5 +48,6 @@ class HomePageAdapter: RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
         this.toDoList.addAll(item)
         notifyDataSetChanged()
     }
+
 
 }

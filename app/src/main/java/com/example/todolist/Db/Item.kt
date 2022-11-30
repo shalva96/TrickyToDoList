@@ -13,7 +13,7 @@ data class Item(
     @ColumnInfo(name = "texts")
     var text: String,
     @ColumnInfo(name = "colors")
-    var color: String,
+    var color: Int,
     @ColumnInfo(name = "dates")
     var date: String
 )

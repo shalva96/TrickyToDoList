@@ -1,10 +1,13 @@
 package com.example.todolist
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.todolist.Adapter.HomePageAdapter
 import com.example.todolist.DataClass.DataModel
+import com.example.todolist.DataClass.HomePageData
 import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.sharedPref.SharedPref
@@ -40,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         dataModel.backFromAddPage.observe(this) {
+            openFrag(HomePage.newInstance(), R.id.placeHolder)
+        }
+        dataModel.saveAndBackFromAddPage.observe(this) {
             openFrag(HomePage.newInstance(), R.id.placeHolder)
         }
 

@@ -6,7 +6,7 @@ data class HomePageData(
 
     val checkbox: Boolean,
     val description: String,
-    val color: String,
+    val color: Int,
     val date: String
 
 ):Serializable

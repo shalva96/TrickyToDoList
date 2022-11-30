@@ -2,6 +2,7 @@ package com.example.todolist
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -348,6 +349,7 @@ class HomePage : Fragment() {
         val homePageData = ArrayList<HomePageData>()
         val db = MainDb.getDb(requireContext())
         db.getDao().getAllItems().asLiveData().observe(viewLifecycleOwner){ item->
+            homePageData.clear()
             item.forEach {homePageData.addAll(
                 listOf(
                     HomePageData(
@@ -363,7 +365,6 @@ class HomePage : Fragment() {
             homePages = homePageData
             adapter.addItem(homePages)
         }
-
 
         return homePageData
     }

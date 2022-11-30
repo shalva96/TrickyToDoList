@@ -31,6 +31,8 @@ class AddNewTaskFragment : Fragment(), DataSelected{
     private var _binding: FragmentAddNewTaskBinding? = null
     private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
+    var color: Int = 0
+    var viewFormatDate: String = " "
     // Class for chose date
     class DatePickerFragment(private val dateSelected: DataSelected): DialogFragment(),  DatePickerDialog.OnDateSetListener {
         @RequiresApi(Build.VERSION_CODES.N)
@@ -74,15 +76,57 @@ class AddNewTaskFragment : Fragment(), DataSelected{
             showDatePicker()
         }
 
+        binding.firsCircle.setOnClickListener {
+            color = R.color.firs_color
+        }
+        binding.secondCircle.setOnClickListener {
+            color = R.color.second_color
+        }
+        binding.threeCircle.setOnClickListener {
+            color = R.color.three_color
+        }
+        binding.fourCircle.setOnClickListener {
+            color = R.color.four_color
+        }
+        binding.fiveCircle.setOnClickListener {
+            color = R.color.five_color
+        }
+        binding.sixCircle.setOnClickListener {
+            color = R.color.six_color
+        }
+        binding.sevenCircle.setOnClickListener {
+            color = R.color.seven_color
+        }
+        binding.eightCircle.setOnClickListener {
+            color = R.color.eight_color
+        }
+        binding.nineCircle.setOnClickListener {
+            color = R.color.nine_color
+        }
 
+        // add DB
+        val db = MainDb.getDb(requireActivity())
+        binding.addPageSaveBtn.setOnClickListener {
+            val item = Item(null,
+                false,
+                binding.AddEditText.text.toString(),
+                color,
+                "$viewFormatDate"
+            )
+            Log.d("MyTag", "$color")
+            CoroutineScope(Dispatchers.IO).launch {
+                db.getDao().insertItem(item)
+            }
+            dataModel.saveAndBackFromAddPage.value = true
+        }
+        binding.addPageCancelBtn.setOnClickListener {
+            dataModel.saveAndBackFromAddPage.value = true
+        }
 
 
 
     }
-    private fun oval(){
 
-
-    }
 
     private fun showDatePicker() {
         val datePickerFragment = DatePickerFragment(this)
@@ -128,22 +172,12 @@ class AddNewTaskFragment : Fragment(), DataSelected{
                 binding.selectedDate.text = "Due $viewFormattedDate"
                 binding.calendarIcon.visibility = View.VISIBLE
             }
-        // add DB
-        val db = MainDb.getDb(requireActivity())
-        binding.addPageSaveBtn.setOnClickListener {
-            val item = Item(null,
-                false,
-                binding.AddEditText.text.toString(),
-                "R.color.firs_color",
-                "$viewFormattedDate"
-            )
-            CoroutineScope(Dispatchers.IO).launch {
-                db.getDao().insertItem(item)
-            }
-        }
+        viewFormatDate = viewFormattedDate
+
 
     }
 }
+
 
 // Get calendar date
 interface  DataSelected {

@@ -350,6 +350,7 @@
             android:textSize="20sp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/homeNewTask"
             android:layout_width="130dp"
             android:layout_height="55dp"
             android:layout_marginTop="30dp"

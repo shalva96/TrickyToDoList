@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.todolist.DataClass.DataModel
 import com.example.todolist.databinding.FragmentEmptyHomeBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,6 +21,7 @@ class EmptyHomeFragment : Fragment() {
 
     private var _binding: FragmentEmptyHomeBinding? = null
     private val binding get() = _binding!!
+    private val dataModel: DataModel by activityViewModels()
 
     private val monthAndYear = SimpleDateFormat("MMM yyyy")
     private val topCalendar: String = monthAndYear.format(Date()) // Current Month and Year
@@ -44,6 +47,12 @@ class EmptyHomeFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.homeNewTask.setOnClickListener {
+            dataModel.newTaskFromHomePage.value = true
+        }
+
 
         when(prevMonth){
             0 -> prevMonthDays = 31

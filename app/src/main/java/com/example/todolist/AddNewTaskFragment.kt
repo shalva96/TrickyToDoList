@@ -19,6 +19,7 @@ import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.FragmentAddNewTaskBinding
+import com.example.todolist.sharedPref.SharedPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +32,7 @@ class AddNewTaskFragment : Fragment(), DataSelected{
     private var _binding: FragmentAddNewTaskBinding? = null
     private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
+    private lateinit var sharedPref: SharedPref
     var color: Int = 0
     var viewFormatDate: String = " "
     // Class for chose date
@@ -67,6 +69,7 @@ class AddNewTaskFragment : Fragment(), DataSelected{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref = SharedPref(requireContext())
 
         binding.backContainer.setOnClickListener {
             dataModel.backFromAddPage.value = true
@@ -117,12 +120,12 @@ class AddNewTaskFragment : Fragment(), DataSelected{
             CoroutineScope(Dispatchers.IO).launch {
                 db.getDao().insertItem(item)
             }
+            sharedPref.saveValueDB(true)
             dataModel.saveAndBackFromAddPage.value = true
         }
         binding.addPageCancelBtn.setOnClickListener {
             dataModel.saveAndBackFromAddPage.value = true
         }
-
 
 
     }

@@ -5,12 +5,15 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import com.example.todolist.Adapter.HomePageAdapter
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.DataClass.HomePageData
+import com.example.todolist.Db.Dao
 import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.sharedPref.SharedPref
+import kotlinx.coroutines.flow.filterNotNull
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,11 +27,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
         sharedPref = SharedPref(this)
-        if (sharedPref.getValue()) {
+
+        if (sharedPref.getValue() && sharedPref.getValueDB()){
             openFrag(HomePage.newInstance(), R.id.placeHolder)
+        }else if (sharedPref.getValue() ){
+            openFrag(EmptyHomeFragment.newInstance(), R.id.placeHolder)
         }else {
             sharedPref.saveValue(true)
             openFrag(OnboardingFragment.newInstance(), R.id.placeHolder)

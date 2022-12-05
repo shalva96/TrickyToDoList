@@ -1,8 +1,10 @@
 package com.example.todolist.Db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -10,11 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface Dao {
 
-    @Insert
-    fun insertItem(item: Item)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertItem(item: Item)
 
     @Query("SELECT * FROM items")
-    fun getAllItems(): Flow<List<Item>>
+    fun getAllItems(): LiveData<List<Item>>
 
     @Update(entity = Item::class)
     fun update(item: Item)

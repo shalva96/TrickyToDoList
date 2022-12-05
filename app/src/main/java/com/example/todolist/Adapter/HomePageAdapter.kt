@@ -5,23 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.DataClass.HomePageData
+import com.example.todolist.Db.Item
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
 
 class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
 
-    private val toDoList = ArrayList<HomePageData>()
+    private var toDoList = emptyList<Item>()
 
     inner class HomePageHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ToDoItemBinding.bind(view)
 
 
-        fun setData(item: HomePageData) {
-            binding.descriptionSample.text = item.description
+        fun setData(item: Item) {
+            binding.checkboxSample.isChecked = item.checked
+            binding.descriptionSample.text = item.text
             binding.dateSample.text = item.date
             if (binding.dateSample.text == " ") binding.dateSample.visibility = View.GONE
             Log.d("MyTag", "${item.color}")
@@ -44,9 +45,10 @@ class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>()
         return toDoList.size
     }
 
-    fun addItem(item: ArrayList<HomePageData>) {
-        this.toDoList.clear()
-        this.toDoList.addAll(item)
+    fun addItem(item: List<Item>) {
+        this.toDoList = item
+//        this.toDoList.clear()
+//        this.toDoList.addAll(item)
         notifyDataSetChanged()
     }
 

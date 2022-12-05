@@ -375,6 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="@string/to_do"
+                    android:fontFamily="@font/ubuntu_medium"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -405,12 +406,45 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/completedImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/completed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/completed"
+            android:textAllCaps="false"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/completedImg"
+            app:layout_constraintTop_toTopOf="@+id/completedImg"
+            app:layout_constraintBottom_toBottomOf="@+id/completedImg"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/completedRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp" />
         </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

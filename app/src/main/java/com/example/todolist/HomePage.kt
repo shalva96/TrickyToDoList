@@ -1,25 +1,21 @@
 package com.example.todolist
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.Adapter.HomePageAdapter
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.DataClass.HomePageData
-import com.example.todolist.Db.MainDb
+import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.databinding.FragmentHomePageBinding
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomePage : Fragment() {
@@ -39,11 +35,10 @@ class HomePage : Fragment() {
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
 
-    private var homePages = ArrayList<HomePageData>()
 
+    private var homePages = emptyList<HomePageData>()
     private lateinit var adapter: HomePageAdapter
-
-
+    private lateinit var mItemViewModel: ItemViewModel
 
 
     override fun onCreateView(
@@ -54,16 +49,17 @@ class HomePage : Fragment() {
         _binding = FragmentHomePageBinding.inflate(inflater)
         return binding.root
 
+
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         init()
 
 
-
-        when(prevMonth){
+        when (prevMonth) {
             0 -> prevMonthDays = 31
             1 -> prevMonthDays = 31
             2 -> {
@@ -97,11 +93,11 @@ class HomePage : Fragment() {
                     firstDay = prevMonthDays
                 }
                 dayOne.text = firstDay.toString()
-                if (firstDay == daysInMonth ) firstDay = 0
+                if (firstDay == daysInMonth) firstDay = 0
                 dayTwo.text = (++firstDay).toString()
-                if (firstDay == daysInMonth ) firstDay = 0
+                if (firstDay == daysInMonth) firstDay = 0
                 dayThree.text = (++firstDay).toString()
-                if (firstDay == daysInMonth ) firstDay = 0
+                if (firstDay == daysInMonth) firstDay = 0
                 dayFour.text = (++firstDay).toString()
                 if (firstDay == daysInMonth) firstDay = 0
                 dayFive.text = (++firstDay).toString()
@@ -150,7 +146,7 @@ class HomePage : Fragment() {
                     daySix.text = (++firstDay).toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     daySeven.text = (++firstDay).toString()
-                }else {
+                } else {
                     dayOne.text = firstDay.toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     dayTwo.text = (++firstDay).toString()
@@ -187,7 +183,7 @@ class HomePage : Fragment() {
                     daySix.text = (++firstDay).toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     daySeven.text = (++firstDay).toString()
-                }else {
+                } else {
                     dayOne.text = firstDay.toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     dayTwo.text = (++firstDay).toString()
@@ -222,7 +218,7 @@ class HomePage : Fragment() {
                     daySix.text = (++firstDay).toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     daySeven.text = (++firstDay).toString()
-                }else {
+                } else {
                     dayOne.text = firstDay.toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     dayTwo.text = (++firstDay).toString()
@@ -257,7 +253,7 @@ class HomePage : Fragment() {
                     daySix.text = (++firstDay).toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     daySeven.text = (++firstDay).toString()
-                }else {
+                } else {
                     dayOne.text = firstDay.toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     dayTwo.text = (++firstDay).toString()
@@ -292,7 +288,7 @@ class HomePage : Fragment() {
                     daySix.text = (++firstDay).toString()
                     if (firstDay == prevMonthDays) firstDay = 0
                     daySeven.text = (++firstDay).toString()
-                }else {
+                } else {
                     dayOne.text = firstDay.toString()
                     if (firstDay == daysInMonth) firstDay = 0
                     dayTwo.text = (++firstDay).toString()
@@ -316,7 +312,6 @@ class HomePage : Fragment() {
         }
 
 
-
     }
 
     override fun onDestroyView() {
@@ -331,41 +326,42 @@ class HomePage : Fragment() {
 
 
     private fun init() {
+        val recyclerView = binding.todoRecyclerView
+        adapter = HomePageAdapter()
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+//            val list = getItems()
+//            adapter.addItem(list)
 
-
-            adapter = HomePageAdapter()
-            binding.todoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.todoRecyclerView.adapter = adapter
-            val list = getItems()
-            adapter.addItem(list)
-
-
-
+        //ItemViewModel
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        mItemViewModel.readAllData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { item ->
+            adapter.addItem(item)
+        })
 
 
     }
 
-    private fun getItems(): ArrayList<HomePageData> {
-        val homePageData = ArrayList<HomePageData>()
-        val db = MainDb.getDb(requireContext())
-        db.getDao().getAllItems().asLiveData().observe(viewLifecycleOwner){ item->
-            homePageData.clear()
-            item.forEach {homePageData.addAll(
-                listOf(
-                    HomePageData(
-                        it.checked,
-                        it.text,
-                        it.color,
-                        it.date
-                    )
-                )
-            )
-
-            }
-            homePages = homePageData
-            adapter.addItem(homePages)
-        }
-
-        return homePageData
-    }
+//    private fun getItems(): ArrayList<HomePageData> {
+//        val homePageData = ArrayList<HomePageData>()
+//        val db = MainDb.getDb(requireContext())
+//        db.getDao().getAllItems().asLiveData().observe(viewLifecycleOwner){ item->
+//            item.forEach {homePageData.addAll(
+//                listOf(
+//                    HomePageData(
+//                        it.checked,
+//                        it.text,
+//                        it.color,
+//                        it.date
+//                    )
+//                )
+//            )
+//
+//            }
+////            homePages = homePageData
+//            adapter.addItem(homePageData)
+//        }
+//
+//        return homePageData
+//    }
 }

@@ -6,37 +6,41 @@ import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
+import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.FragmentAddNewTaskBinding
 import com.example.todolist.sharedPref.SharedPref
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddNewTaskFragment : Fragment(), DataSelected{
+class AddNewTaskFragment : Fragment(), DataSelected {
 
     private var _binding: FragmentAddNewTaskBinding? = null
     private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
+    private lateinit var mItemViewModel: ItemViewModel
     var color: Int = 0
     var viewFormatDate: String = " "
+
     // Class for chose date
-    class DatePickerFragment(private val dateSelected: DataSelected): DialogFragment(),  DatePickerDialog.OnDateSetListener {
+    class DatePickerFragment(private val dateSelected: DataSelected) : DialogFragment(),
+        DatePickerDialog.OnDateSetListener {
         @RequiresApi(Build.VERSION_CODES.N)
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -65,11 +69,16 @@ class AddNewTaskFragment : Fragment(), DataSelected{
         _binding = FragmentAddNewTaskBinding.inflate(inflater)
         return binding.root
 
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         sharedPref = SharedPref(requireContext())
+
+
 
         binding.backContainer.setOnClickListener {
             dataModel.backFromAddPage.value = true
@@ -108,26 +117,50 @@ class AddNewTaskFragment : Fragment(), DataSelected{
         }
 
         // add DB
-        val db = MainDb.getDb(requireActivity())
+        val db = MainDb.getDb(requireContext())
         binding.addPageSaveBtn.setOnClickListener {
-            val item = Item(null,
-                false,
-                binding.AddEditText.text.toString(),
-                color,
-                "$viewFormatDate"
-            )
-            Log.d("MyTag", "$color")
-            CoroutineScope(Dispatchers.IO).launch {
-                db.getDao().insertItem(item)
-            }
-            sharedPref.saveValueDB(true)
-            dataModel.saveAndBackFromAddPage.value = true
+            insertDataToDatabase()
+//            val item = Item(null,
+//                false,
+//                binding.AddEditText.text.toString(),
+//                color,
+//                "$viewFormatDate"
+//            )
+//            Log.d("MyTag", "$color")
+//            CoroutineScope(Dispatchers.IO).launch {
+//                db.getDao().insertItem(item)
+//            }
+//            sharedPref.saveValueDB(true)
+//            dataModel.saveAndBackFromAddPage.value = true
         }
         binding.addPageCancelBtn.setOnClickListener {
             dataModel.saveAndBackFromAddPage.value = true
         }
 
 
+    }
+
+    private fun insertDataToDatabase() {
+
+        val description = binding.AddEditText.text.toString()
+
+        if (inputCheck(description)) {
+            //Create item object
+            val item = Item(null, false, binding.AddEditText.text.toString(), color, "$viewFormatDate")
+            //Add Data to DB
+            mItemViewModel.addItem(item)
+
+            // Set on boarding and back home page
+            sharedPref.saveValueDB(true)
+            dataModel.saveAndBackFromAddPage.value = true
+        } else {
+            Toast.makeText(requireContext(), "Please fill out description", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun inputCheck(description: String): Boolean {
+        return !(TextUtils.isEmpty(description))
     }
 
 
@@ -140,7 +173,6 @@ class AddNewTaskFragment : Fragment(), DataSelected{
     companion object {
         fun newInstance() = AddNewTaskFragment()
     }
-
 
 
     override fun onDestroyView() {
@@ -159,7 +191,6 @@ class AddNewTaskFragment : Fragment(), DataSelected{
         calendar.set(Calendar.YEAR, year)
 
 
-
         val viewFormatter = SimpleDateFormat("dd MMM")
         var viewFormattedDate: String = viewFormatter.format(calendar.time)
         if (Calendar.DAY_OF_MONTH != dayOfMonth && Calendar.MONTH != month && Calendar.YEAR != year) {
@@ -167,14 +198,14 @@ class AddNewTaskFragment : Fragment(), DataSelected{
             binding.selectedDate.text = "Due $viewFormattedDate"
             binding.calendarIcon.visibility = View.GONE
         }
-            binding.cleanDate.setOnClickListener {
-                val day = SimpleDateFormat("dd MMM yyyy")
-                val date: String = day.format(Date())
-                binding.choseDate.visibility = View.GONE
-                viewFormattedDate = date.format(Date())
-                binding.selectedDate.text = "Due $viewFormattedDate"
-                binding.calendarIcon.visibility = View.VISIBLE
-            }
+        binding.cleanDate.setOnClickListener {
+            val day = SimpleDateFormat("dd MMM yyyy")
+            val date: String = day.format(Date())
+            binding.choseDate.visibility = View.GONE
+            viewFormattedDate = date.format(Date())
+            binding.selectedDate.text = "Due $viewFormattedDate"
+            binding.calendarIcon.visibility = View.VISIBLE
+        }
         viewFormatDate = viewFormattedDate
 
 
@@ -183,6 +214,6 @@ class AddNewTaskFragment : Fragment(), DataSelected{
 
 
 // Get calendar date
-interface  DataSelected {
-    fun receiveDate(year: Int,month: Int,dayOfMonth: Int)
+interface DataSelected {
+    fun receiveDate(year: Int, month: Int, dayOfMonth: Int)
 }

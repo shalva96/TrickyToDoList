@@ -9,6 +9,7 @@
     <string name="addBtn">New task</string>
     <string name="to_do">To do</string>
     <string name="sort_by">sort by</string>
+    <string name="completed">Completed</string>
 
     <!-- Empty Page -->
     <string name="empty">Add some tasks, don\'t make me bored</string>

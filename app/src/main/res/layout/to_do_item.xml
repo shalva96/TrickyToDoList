@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/custom_color_primary"
-    android:paddingBottom="15dp">
+    android:paddingBottom="15dp"
+    android:id="@+id/itemLayout">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

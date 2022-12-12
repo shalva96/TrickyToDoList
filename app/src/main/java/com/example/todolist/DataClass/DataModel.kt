@@ -1,7 +1,11 @@
 package com.example.todolist.DataClass
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.todolist.R
+import com.example.todolist.UpdateFragment
+import java.util.concurrent.Flow
 
 // Model for fragments
 
@@ -21,6 +25,17 @@ open class DataModel: ViewModel() {
     val saveAndBackFromAddPage: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
+
+    val updateFragment: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
+    val recyclerViewItem: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
+
+
 
 
 

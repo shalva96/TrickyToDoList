@@ -48,11 +48,25 @@ class EmptyHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.homeNewTask.setOnClickListener {
             dataModel.newTaskFromHomePage.value = true
         }
 
+        calendar()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    companion object {
+        fun newInstance() = EmptyHomeFragment()
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun calendar() {
 
         when(prevMonth){
             0 -> prevMonthDays = 31
@@ -297,14 +311,7 @@ class EmptyHomeFragment : Fragment() {
                 }
             }
         }
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        fun newInstance() = EmptyHomeFragment()
-    }
 }

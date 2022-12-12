@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,22 +16,21 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.Db.MainDb
-import com.example.todolist.databinding.FragmentAddNewTaskBinding
+import com.example.todolist.databinding.FragmentUpdateBinding
 import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
 
+class UpdateFragment : Fragment(), DataSelected {
 
-class AddNewTaskFragment : Fragment(), DataSelected {
 
-    private var _binding: FragmentAddNewTaskBinding? = null
+    private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
@@ -60,86 +60,50 @@ class AddNewTaskFragment : Fragment(), DataSelected {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        _binding = FragmentAddNewTaskBinding.inflate(inflater)
+        _binding = FragmentUpdateBinding.inflate(inflater)
         return binding.root
-
-
-    }
-    fun onClick(item: Item) {
-        dataModel.newTaskFromHomePage.value = true
-        Toast.makeText(requireActivity(),"Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val db = MainDb.getDb(requireContext())
+
+        dataModel.recyclerViewItem.observe(viewLifecycleOwner) {
+            binding.updateAddEditText.setText(it)
+        }
+
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         sharedPref = SharedPref(requireContext())
 
-
-
-        binding.backContainer.setOnClickListener {
+        binding.updateBackContainer.setOnClickListener {
             dataModel.backFromAddPage.value = true
         }
 
-        binding.calendarIcon.setOnClickListener {
+        binding.updateCalendarIcon.setOnClickListener {
             showDatePicker()
         }
-
-        binding.firsCircle.setOnClickListener {
-            color = R.color.firs_color
-        }
-        binding.secondCircle.setOnClickListener {
-            color = R.color.second_color
-        }
-        binding.threeCircle.setOnClickListener {
-            color = R.color.three_color
-        }
-        binding.fourCircle.setOnClickListener {
-            color = R.color.four_color
-        }
-        binding.fiveCircle.setOnClickListener {
-            color = R.color.five_color
-        }
-        binding.sixCircle.setOnClickListener {
-            color = R.color.six_color
-        }
-        binding.sevenCircle.setOnClickListener {
-            color = R.color.seven_color
-        }
-        binding.eightCircle.setOnClickListener {
-            color = R.color.eight_color
-        }
-        binding.nineCircle.setOnClickListener {
-            color = R.color.nine_color
-        }
-
         // add DB
-        binding.addPageSaveBtn.setOnClickListener {
+        val db = MainDb.getDb(requireContext())
+        binding.updateAddPageSaveBtn.setOnClickListener {
             insertDataToDatabase()
         }
-        binding.addPageCancelBtn.setOnClickListener {
+        binding.updateAddPageCancelBtn.setOnClickListener {
             dataModel.saveAndBackFromAddPage.value = true
         }
-
-
     }
 
     private fun insertDataToDatabase() {
 
-        val description = binding.AddEditText.text.toString()
+        val description = binding.updateAddEditText.text.toString()
 
         if (inputCheck(description)) {
             //Create item object
-            val item = Item(null, false, binding.AddEditText.text.toString(), color, "$viewFormatDate")
+            val item = Item(null, false, binding.updateAddEditText.text.toString(), color, "$viewFormatDate")
             //Add Data to DB
             mItemViewModel.addItem(item)
 
@@ -158,21 +122,21 @@ class AddNewTaskFragment : Fragment(), DataSelected {
 
 
     private fun showDatePicker() {
-        val datePickerFragment = DatePickerFragment(this)
+        val datePickerFragment = AddNewTaskFragment.DatePickerFragment(this)
         datePickerFragment.show(parentFragmentManager, "datePicker")
     }
 
 
-    companion object {
-        fun newInstance() = AddNewTaskFragment()
-    }
 
+
+    companion object {
+        fun newInstance() = UpdateFragment()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
     // This is function that will be invoked in our fragment when a user picks a date
     @RequiresApi(Build.VERSION_CODES.N)
@@ -187,26 +151,19 @@ class AddNewTaskFragment : Fragment(), DataSelected {
         val viewFormatter = SimpleDateFormat("dd MMM")
         var viewFormattedDate: String = viewFormatter.format(calendar.time)
         if (Calendar.DAY_OF_MONTH != dayOfMonth && Calendar.MONTH != month && Calendar.YEAR != year) {
-            binding.choseDate.visibility = View.VISIBLE
-            binding.selectedDate.text = "Due $viewFormattedDate"
-            binding.calendarIcon.visibility = View.GONE
+            binding.updateChoseDate.visibility = View.VISIBLE
+            binding.updateSelectedDate.text = "Due $viewFormattedDate"
+            binding.updateCalendarIcon.visibility = View.GONE
         }
-        binding.cleanDate.setOnClickListener {
+        binding.updateCleanDate.setOnClickListener {
             val day = SimpleDateFormat("dd MMM yyyy")
             val date: String = day.format(Date())
-            binding.choseDate.visibility = View.GONE
+            binding.updateChoseDate.visibility = View.GONE
             viewFormattedDate = date.format(Date())
-            binding.selectedDate.text = "Due $viewFormattedDate"
-            binding.calendarIcon.visibility = View.VISIBLE
+            binding.updateSelectedDate.text = "Due $viewFormattedDate"
+            binding.updateCalendarIcon.visibility = View.VISIBLE
         }
         viewFormatDate = viewFormattedDate
 
-
     }
-}
-
-
-// Get calendar date
-interface DataSelected {
-    fun receiveDate(year: Int, month: Int, dayOfMonth: Int)
 }

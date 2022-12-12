@@ -12,7 +12,7 @@ import com.example.todolist.Db.Item
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
 
-class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
+class HomePageAdapter(val listener: Listener) : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
 
     private var toDoList = emptyList<Item>()
 
@@ -20,12 +20,16 @@ class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>()
         private val binding = ToDoItemBinding.bind(view)
 
 
-        fun setData(item: Item) {
+        fun setData(item: Item, listener: Listener) {
             binding.checkboxSample.isChecked = item.checked
             binding.descriptionSample.text = item.text
             binding.dateSample.text = item.date
             if (binding.dateSample.text == " ") binding.dateSample.visibility = View.GONE
             Log.d("MyTag", "${item.color}")
+
+            binding.itemLayout.setOnClickListener {
+                listener.onClick(item)
+            }
         }
     }
 
@@ -38,7 +42,7 @@ class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HomePageHolder, position: Int) {
         val currentItem = toDoList[position]
-        holder.setData(currentItem)
+        holder.setData(currentItem, listener)
     }
 
     override fun getItemCount(): Int {
@@ -50,6 +54,10 @@ class HomePageAdapter() : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>()
 //        this.toDoList.clear()
 //        this.toDoList.addAll(item)
         notifyDataSetChanged()
+    }
+
+    interface Listener {
+        fun onClick(item: Item)
     }
 
 

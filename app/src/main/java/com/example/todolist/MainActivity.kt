@@ -1,19 +1,12 @@
 package com.example.todolist
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.asLiveData
-import com.example.todolist.Adapter.HomePageAdapter
 import com.example.todolist.DataClass.DataModel
-import com.example.todolist.DataClass.HomePageData
-import com.example.todolist.Db.Dao
-import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.sharedPref.SharedPref
-import kotlinx.coroutines.flow.filterNotNull
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +32,14 @@ class MainActivity : AppCompatActivity() {
             openFrag(OnboardingFragment.newInstance(), R.id.placeHolder)
         }
 
+        fragmentClickListener()
+
+
+
+    }
+
+
+    private fun fragmentClickListener() {
         dataModel.openFragEmptyFragment.observe(this) {
             openFrag(EmptyHomeFragment.newInstance(), R.id.placeHolder)
         }
@@ -53,12 +54,10 @@ class MainActivity : AppCompatActivity() {
         dataModel.saveAndBackFromAddPage.observe(this) {
             openFrag(HomePage.newInstance(), R.id.placeHolder)
         }
-
-
-
+            dataModel.updateFragment.observe(this) {
+                openFrag(UpdateFragment.newInstance(), R.id.placeHolder)
+            }
     }
-
-
 
     private fun openFrag(f: Fragment, idHolder: Int) {
         supportFragmentManager

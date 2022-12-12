@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -12,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.Adapter.HomePageAdapter
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.DataClass.HomePageData
+import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.databinding.FragmentHomePageBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomePage : Fragment() {
+class HomePage : Fragment(), HomePageAdapter.Listener {
 
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
@@ -55,9 +57,48 @@ class HomePage : Fragment() {
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
+        calendar()
+        clickListener()
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+
+    }
+
+    companion object {
+        fun newInstance() = HomePage()
+    }
+
+    private fun init() {
+        val recyclerView = binding.todoRecyclerView
+        adapter = HomePageAdapter(this)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+//            val list = getItems()
+//            adapter.addItem(list)
+
+        //ItemViewModel
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        mItemViewModel.readAllData.observe(viewLifecycleOwner) { item ->
+            adapter.addItem(item)
+        }
+
+    }
+
+    private fun clickListener() {
+        binding.homeNewTask.setOnClickListener {
+            dataModel.newTaskFromHomePage.value = true
+        }
+
+    }
+
+
+    @SuppressLint("ResourceAsColor")
+    private fun calendar() {
 
         when (prevMonth) {
             0 -> prevMonthDays = 31
@@ -304,43 +345,16 @@ class HomePage : Fragment() {
                     daySeven.text = (++firstDay).toString()
                 }
             }
-        }// Calendar End!!!
-
-
-        binding.homeNewTask.setOnClickListener {
-            dataModel.newTaskFromHomePage.value = true
         }
+    } // Calendar end!!
 
-
+    // Interface from HomePageAdapter
+    override fun onClick(item: Item) {
+        dataModel.updateFragment.value = true
+        Toast.makeText(requireActivity(),"Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
+        dataModel.recyclerViewItem.value = "${item.text}"
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-
-    }
-
-    companion object {
-        fun newInstance() = HomePage()
-    }
-
-
-    private fun init() {
-        val recyclerView = binding.todoRecyclerView
-        adapter = HomePageAdapter()
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-//            val list = getItems()
-//            adapter.addItem(list)
-
-        //ItemViewModel
-        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        mItemViewModel.readAllData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { item ->
-            adapter.addItem(item)
-        })
-
-
-    }
 
 //    private fun getItems(): ArrayList<HomePageData> {
 //        val homePageData = ArrayList<HomePageData>()

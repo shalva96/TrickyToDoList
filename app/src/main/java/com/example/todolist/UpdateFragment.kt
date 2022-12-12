@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
-import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.FragmentUpdateBinding
 import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
@@ -86,7 +85,7 @@ class UpdateFragment : Fragment(), DataSelected {
         dataModel.recyclerViewItemId.observe(viewLifecycleOwner) {
             this.itemId = it
         }
-        dataModel.recyclerViewItem.observe(viewLifecycleOwner) {
+        dataModel.recyclerViewItemText.observe(viewLifecycleOwner) {
             binding.updateAddEditText.setText(it)
         }
         dataModel.recyclerViewItemDate.observe(viewLifecycleOwner) {

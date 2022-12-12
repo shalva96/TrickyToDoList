@@ -1,12 +1,7 @@
 package com.example.todolist.DataClass
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.todolist.Db.Item
-import com.example.todolist.R
-import com.example.todolist.UpdateFragment
-import java.util.concurrent.Flow
 
 // Model for fragments
 
@@ -32,12 +27,12 @@ open class DataModel: ViewModel() {
     }
 
 
-
+    // get value for update!!
     val recyclerViewItemId: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
 
-    val recyclerViewItem: MutableLiveData<String> by lazy {
+    val recyclerViewItemText: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
     val recyclerViewItemDate: MutableLiveData<String> by lazy {
@@ -45,8 +40,5 @@ open class DataModel: ViewModel() {
     }
 
 
-
-
-
-
 }
+

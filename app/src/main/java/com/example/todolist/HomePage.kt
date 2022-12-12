@@ -353,7 +353,7 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
         dataModel.updateFragment.value = true
         Toast.makeText(requireActivity(),"Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
         dataModel.recyclerViewItemId.value = item.id
-        dataModel.recyclerViewItem.value = item.text
+        dataModel.recyclerViewItemText.value = item.text
         dataModel.recyclerViewItemDate.value = item.date
 
     }

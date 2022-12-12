@@ -1,7 +1,6 @@
 package com.example.todolist.Db
 
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.flow.Flow
 
 class Repository(private val getDao: Dao) {
 
@@ -9,6 +8,10 @@ class Repository(private val getDao: Dao) {
 
     suspend fun addItem(item: Item) {
         getDao.insertItem(item)
+    }
+
+    suspend fun update(item: Item) {
+        getDao.update(item)
     }
 
 }

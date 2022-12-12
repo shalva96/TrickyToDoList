@@ -37,6 +37,7 @@ class UpdateFragment : Fragment(), DataSelected {
     private lateinit var mItemViewModel: ItemViewModel
     var color: Int = 0
     var viewFormatDate: String = " "
+    var itemId: Int = 0
 
     // Class for chose date
     class DatePickerFragment(private val dateSelected: DataSelected) : DialogFragment(),
@@ -72,48 +73,65 @@ class UpdateFragment : Fragment(), DataSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataModel.recyclerViewItem.observe(viewLifecycleOwner) {
-            binding.updateAddEditText.setText(it)
-        }
-
+        getVariableForUpdate()
+        clickListener()
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         sharedPref = SharedPref(requireContext())
 
+
+    }
+
+    private fun getVariableForUpdate() {
+        dataModel.recyclerViewItemId.observe(viewLifecycleOwner) {
+            this.itemId = it
+        }
+        dataModel.recyclerViewItem.observe(viewLifecycleOwner) {
+            binding.updateAddEditText.setText(it)
+        }
+        dataModel.recyclerViewItemDate.observe(viewLifecycleOwner) {
+            if (it != " ") {
+                binding.updateCalendarIcon.visibility = View.GONE
+                binding.updateChoseDate.visibility = View.VISIBLE
+                binding.updateSelectedDate.text = it
+            } else {
+                binding.updateCalendarIcon.visibility = View.VISIBLE
+                binding.updateSelectedDate.visibility = View.GONE
+            }
+        }
+        binding.updateCleanDate.setOnClickListener {
+            binding.updateChoseDate.visibility = View.GONE
+            binding.updateCalendarIcon.visibility = View.VISIBLE
+        }
+    }
+
+    private fun clickListener() {
         binding.updateBackContainer.setOnClickListener {
             dataModel.backFromAddPage.value = true
         }
-
         binding.updateCalendarIcon.setOnClickListener {
             showDatePicker()
         }
-        // add DB
-        val db = MainDb.getDb(requireContext())
         binding.updateAddPageSaveBtn.setOnClickListener {
-            insertDataToDatabase()
+            updateItem()
         }
         binding.updateAddPageCancelBtn.setOnClickListener {
             dataModel.saveAndBackFromAddPage.value = true
         }
     }
 
-    private fun insertDataToDatabase() {
-
+    private fun updateItem() {
         val description = binding.updateAddEditText.text.toString()
-
         if (inputCheck(description)) {
-            //Create item object
-            val item = Item(null, false, binding.updateAddEditText.text.toString(), color, "$viewFormatDate")
-            //Add Data to DB
-            mItemViewModel.addItem(item)
 
-            // Set on boarding and back home page
-            sharedPref.saveValueDB(true)
-            dataModel.saveAndBackFromAddPage.value = true
-        } else {
+            val updateItem = Item(itemId, false, description, 333333, "$viewFormatDate")
+            mItemViewModel.updateItem(updateItem)
+            Toast.makeText(requireContext(), "Updated Successfully", Toast.LENGTH_LONG).show()
+        }else {
             Toast.makeText(requireContext(), "Please fill out description", Toast.LENGTH_SHORT)
                 .show()
         }
+        dataModel.saveAndBackFromAddPage.value = true
     }
 
     private fun inputCheck(description: String): Boolean {
@@ -125,8 +143,6 @@ class UpdateFragment : Fragment(), DataSelected {
         val datePickerFragment = AddNewTaskFragment.DatePickerFragment(this)
         datePickerFragment.show(parentFragmentManager, "datePicker")
     }
-
-
 
 
     companion object {

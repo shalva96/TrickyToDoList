@@ -19,7 +19,7 @@ interface Dao {
     fun getAllItems(): LiveData<List<Item>>
 
     @Update(entity = Item::class)
-    fun update(item: Item)
+    suspend fun update(item: Item)
 
 
     @Delete(entity = Item::class)

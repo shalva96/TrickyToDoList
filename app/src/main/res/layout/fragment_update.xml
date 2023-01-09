@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/custom_color_primary"
     tools:context=".UpdateFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,8 +111,8 @@
         android:id="@+id/updateAddEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="25dp"
         android:hint="@string/addEditTv"
         android:inputType="text"
@@ -122,154 +123,366 @@
         app:layout_constraintTop_toBottomOf="@+id/updateAppCompatTextView" />
 
     <!-- Circle start -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/circleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/updateAllCircle"
+        app:layout_constraintGuide_percent="0.4"
+        app:layout_constraintStart_toStartOf="@+id/updateAllCircle" />
+
     <LinearLayout
         android:id="@+id/updateAllCircle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="150dp"
-        android:orientation="horizontal"
+        android:gravity="center"
         android:weightSum="9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateAddEditText">
+        app:layout_constraintEnd_toEndOf="@+id/updateAddEditText"
+        app:layout_constraintStart_toStartOf="@+id/updateAddEditText"
+        app:layout_constraintTop_toTopOf="@+id/circleLine">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateFirsCircle"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/firsCircle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/firs_color" />
+            android:layout_gravity="center"
+            android:layout_weight="1">
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/firstInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/firs_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateSecondCircle"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/firsOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/firs_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/firstInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/firstInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/firstInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/firstInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/secondCircle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/second_color" />
+            android:layout_weight="1">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateThreeCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/three_color" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/secondInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/second_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateFourCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/four_color" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/secondOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/second_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/secondInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/secondInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/secondInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/secondInnerCircle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateFiveCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/five_color" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateSixCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/six_color" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateSevenCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/seven_color" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateEightCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/eight_color" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/updateNineCircle"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/threeCircle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/nine_color" />
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
 
-    </LinearLayout> <!-- Circle end -->
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/threeInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/three_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/threeOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/three_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/threeInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/threeInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/threeInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/threeInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fourCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/fourInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/four_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/fourOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/four_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/fourInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/fourInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/fourInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/fourInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fiveCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/fiveInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/four_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/fiveOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/four_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/fiveInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/fiveInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/fiveInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/fiveInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sixCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/sixInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/six_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/sixOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/six_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/sixInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/sixInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/sixInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/sixInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sevenCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/sevenInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/seven_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/sevenOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/seven_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/sevenInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/sevenInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/sevenInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/sevenInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/eightCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/eightInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/eight_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/eightOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/eight_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/eightInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/eightInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/eightInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/eightInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/nineCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/secondCircle">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/nineInnerCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/nine_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/nineOval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clone_circle"
+                android:backgroundTint="@color/nine_color"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/nineInnerCircle"
+                app:layout_constraintEnd_toEndOf="@+id/nineInnerCircle"
+                app:layout_constraintStart_toStartOf="@+id/nineInnerCircle"
+                app:layout_constraintTop_toTopOf="@+id/nineInnerCircle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <!-- Circle end -->
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/updateAddPageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="35dp"
-        app:layout_constraintTop_toBottomOf="@+id/updateAllCircle"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/updateAllCircle"
         app:layout_constraintStart_toStartOf="@+id/updateAllCircle"
-        app:layout_constraintEnd_toEndOf="@+id/updateAllCircle">
+        app:layout_constraintTop_toBottomOf="@+id/updateAllCircle">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="70dp"
             android:background="@drawable/x"
             android:backgroundTint="@color/black"
-            android:layout_marginEnd="70dp"
+            app:layout_constraintBottom_toBottomOf="@+id/updateAddPageCancelBtn"
             app:layout_constraintEnd_toEndOf="@+id/updateAddPageCancelBtn"
             app:layout_constraintStart_toStartOf="@+id/updateAddPageCancelBtn"
-            app:layout_constraintTop_toTopOf="@+id/updateAddPageCancelBtn"
-            app:layout_constraintBottom_toBottomOf="@+id/updateAddPageCancelBtn"/>
+            app:layout_constraintTop_toTopOf="@+id/updateAddPageCancelBtn" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/updateAddPageCancelBtn"
             android:layout_width="160dp"
             android:layout_height="60dp"
-            android:fontFamily="@font/ubuntu"
-            android:textColor="@color/custom_color_dark"
-            android:textSize="16sp"
-            android:gravity="center"
             android:backgroundTint="@color/custom_color_primary"
+            android:fontFamily="@font/ubuntu"
+            android:gravity="center"
             android:text="Calcel"
             android:textAllCaps="false"
+            android:textColor="@color/custom_color_dark"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/updateAddPageSaveBtn"
             android:layout_width="160dp"
-            android:backgroundTint="@color/custom_color_dark"
-            android:text="Save"
-            android:textColor="@color/white"
-            android:fontFamily="@font/ubuntu_medium"
-            app:cornerRadius="15dp"
-            android:textAllCaps="false"
             android:layout_height="60dp"
+            android:backgroundTint="@color/custom_color_dark"
+            android:fontFamily="@font/ubuntu_medium"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

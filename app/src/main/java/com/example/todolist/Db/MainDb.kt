@@ -11,7 +11,7 @@ abstract class MainDb: RoomDatabase() {
     abstract fun getDao(): Dao
 
 
-    //    companion object{
+//    companion object{
 //        fun getDb(context: Context): MainDb{
 //            return Room.databaseBuilder(
 //                context.applicationContext,

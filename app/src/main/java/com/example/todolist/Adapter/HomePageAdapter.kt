@@ -12,7 +12,7 @@ import com.example.todolist.Db.Item
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
 
-class HomePageAdapter(val listener: Listener) : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
+class HomePageAdapter(val listener: Listener?) : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
 
     private var toDoList = emptyList<Item>()
 
@@ -20,7 +20,7 @@ class HomePageAdapter(val listener: Listener) : RecyclerView.Adapter<HomePageAda
         private val binding = ToDoItemBinding.bind(view)
 
 
-        fun setData(item: Item, listener: Listener) {
+        fun setData(item: Item, listener: Listener?) {
             binding.checkboxSample.isChecked = item.checked
             binding.descriptionSample.text = item.text
             binding.dateSample.text = item.date
@@ -28,7 +28,7 @@ class HomePageAdapter(val listener: Listener) : RecyclerView.Adapter<HomePageAda
             Log.d("MyTag", "${item.color}")
 
             binding.itemLayout.setOnClickListener {
-                listener.onClick(item)
+                listener?.onClick(item)
             }
         }
     }
@@ -51,8 +51,6 @@ class HomePageAdapter(val listener: Listener) : RecyclerView.Adapter<HomePageAda
 
     fun addItem(item: List<Item>) {
         this.toDoList = item
-//        this.toDoList.clear()
-//        this.toDoList.addAll(item)
         notifyDataSetChanged()
     }
 

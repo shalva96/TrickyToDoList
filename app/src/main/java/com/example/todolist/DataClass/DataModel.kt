@@ -2,6 +2,7 @@ package com.example.todolist.DataClass
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.todolist.Db.Item
 
 // Model for fragments
 
@@ -28,15 +29,8 @@ open class DataModel: ViewModel() {
 
 
     // get value for update!!
-    val recyclerViewItemId: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>()
-    }
-
-    val recyclerViewItemText: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-    val recyclerViewItemDate: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val recyclerViewItemId: MutableLiveData<Item> by lazy {
+        MutableLiveData<Item>()
     }
 
 

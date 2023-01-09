@@ -38,7 +38,6 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     private var prevMonthDays = 0
 
 
-    private var homePages = emptyList<HomePageData>()
     private lateinit var adapter: HomePageAdapter
     private lateinit var mItemViewModel: ItemViewModel
 
@@ -78,9 +77,6 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
         adapter = HomePageAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-//            val list = getItems()
-//            adapter.addItem(list)
-
         //ItemViewModel
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         mItemViewModel.readAllData.observe(viewLifecycleOwner) { item ->
@@ -351,34 +347,10 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     // Interface from HomePageAdapter
     override fun onClick(item: Item) {
         dataModel.updateFragment.value = true
-        Toast.makeText(requireActivity(),"Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
-        dataModel.recyclerViewItemId.value = item.id
-        dataModel.recyclerViewItemText.value = item.text
-        dataModel.recyclerViewItemDate.value = item.date
+        dataModel.recyclerViewItemId.value = item
 
     }
 
 
-//    private fun getItems(): ArrayList<HomePageData> {
-//        val homePageData = ArrayList<HomePageData>()
-//        val db = MainDb.getDb(requireContext())
-//        db.getDao().getAllItems().asLiveData().observe(viewLifecycleOwner){ item->
-//            item.forEach {homePageData.addAll(
-//                listOf(
-//                    HomePageData(
-//                        it.checked,
-//                        it.text,
-//                        it.color,
-//                        it.date
-//                    )
-//                )
-//            )
-//
-//            }
-////            homePages = homePageData
-//            adapter.addItem(homePageData)
-//        }
-//
-//        return homePageData
-//    }
+
 }

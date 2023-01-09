@@ -65,16 +65,13 @@ class AddNewTaskFragment : Fragment(), DataSelected {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentAddNewTaskBinding.inflate(inflater)
         return binding.root
-
-
     }
+
     fun onClick(item: Item) {
         dataModel.newTaskFromHomePage.value = true
-        Toast.makeText(requireActivity(),"Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
-
+        Toast.makeText(requireActivity(), "Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,52 +80,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         sharedPref = SharedPref(requireContext())
-
-
-
-        binding.backContainer.setOnClickListener {
-            dataModel.backFromAddPage.value = true
-        }
-
-        binding.calendarIcon.setOnClickListener {
-            showDatePicker()
-        }
-
-        binding.firsCircle.setOnClickListener {
-            color = R.color.firs_color
-        }
-        binding.secondCircle.setOnClickListener {
-            color = R.color.second_color
-        }
-        binding.threeCircle.setOnClickListener {
-            color = R.color.three_color
-        }
-        binding.fourCircle.setOnClickListener {
-            color = R.color.four_color
-        }
-        binding.fiveCircle.setOnClickListener {
-            color = R.color.five_color
-        }
-        binding.sixCircle.setOnClickListener {
-            color = R.color.six_color
-        }
-        binding.sevenCircle.setOnClickListener {
-            color = R.color.seven_color
-        }
-        binding.eightCircle.setOnClickListener {
-            color = R.color.eight_color
-        }
-        binding.nineCircle.setOnClickListener {
-            color = R.color.nine_color
-        }
-
-        // add DB
-        binding.addPageSaveBtn.setOnClickListener {
-            insertDataToDatabase()
-        }
-        binding.addPageCancelBtn.setOnClickListener {
-            dataModel.saveAndBackFromAddPage.value = true
-        }
+        clickListener()
 
 
     }
@@ -139,7 +91,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
 
         if (inputCheck(description)) {
             //Create item object
-            val item = Item(null, false, binding.AddEditText.text.toString(), color, "$viewFormatDate")
+            val item = Item(null, false, description, color, "$viewFormatDate")
             //Add Data to DB
             mItemViewModel.addItem(item)
 
@@ -202,6 +154,125 @@ class AddNewTaskFragment : Fragment(), DataSelected {
         viewFormatDate = viewFormattedDate
 
 
+    }
+
+    private fun clickListener() {
+        binding.backContainer.setOnClickListener {
+            dataModel.backFromAddPage.value = true
+        }
+
+        binding.calendarIcon.setOnClickListener {
+            showDatePicker()
+        }
+
+
+        binding.firstInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.VISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.secondInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.VISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.threeInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.VISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.fourInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.VISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.fiveInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.VISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.sixInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.VISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.sevenInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.VISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.eightInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.VISIBLE
+            binding.nineOval.visibility = View.INVISIBLE
+        }
+        binding.nineInnerCircle.setOnClickListener {
+            binding.firsOval.visibility = View.INVISIBLE
+            binding.secondOval.visibility = View.INVISIBLE
+            binding.threeOval.visibility = View.INVISIBLE
+            binding.fourOval.visibility = View.INVISIBLE
+            binding.fiveOval.visibility = View.INVISIBLE
+            binding.sixOval.visibility = View.INVISIBLE
+            binding.sevenOval.visibility = View.INVISIBLE
+            binding.eightOval.visibility = View.INVISIBLE
+            binding.nineOval.visibility = View.VISIBLE
+        }
+
+        // add DB
+        binding.addPageSaveBtn.setOnClickListener {
+            insertDataToDatabase()
+        }
+        binding.addPageCancelBtn.setOnClickListener {
+            dataModel.saveAndBackFromAddPage.value = true
+        }
     }
 }
 

@@ -35,7 +35,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
-    var color: Int = 0
+    var color: Int = 9
     var viewFormatDate: String = " "
 
     // Class for chose date
@@ -176,6 +176,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 0
         }
         binding.secondInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -187,6 +188,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 1
         }
         binding.threeInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -198,6 +200,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 2
         }
         binding.fourInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -209,6 +212,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 3
         }
         binding.fiveInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -220,6 +224,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 4
         }
         binding.sixInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -231,6 +236,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 5
         }
         binding.sevenInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -242,6 +248,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.VISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 6
         }
         binding.eightInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -253,6 +260,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.VISIBLE
             binding.nineOval.visibility = View.INVISIBLE
+            color = 7
         }
         binding.nineInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.INVISIBLE
@@ -264,6 +272,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             binding.sevenOval.visibility = View.INVISIBLE
             binding.eightOval.visibility = View.INVISIBLE
             binding.nineOval.visibility = View.VISIBLE
+            color = 8
         }
 
         // add DB

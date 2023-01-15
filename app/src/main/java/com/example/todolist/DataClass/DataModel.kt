@@ -32,6 +32,9 @@ open class DataModel: ViewModel() {
     val recyclerViewItemId: MutableLiveData<Item> by lazy {
         MutableLiveData<Item>()
     }
+    val recyclerViewDeleteItemId: MutableLiveData<Item> by lazy {
+        MutableLiveData<Item>()
+    }
 
 
 }

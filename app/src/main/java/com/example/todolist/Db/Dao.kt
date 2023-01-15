@@ -23,6 +23,8 @@ interface Dao {
 
 
     @Delete(entity = Item::class)
-    fun delete(item: Item)
+    suspend fun delete(item: Item)
+
+
 
 }

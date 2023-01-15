@@ -375,8 +375,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/to_do"
                     android:fontFamily="@font/ubuntu_medium"
+                    android:text="@string/to_do"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -407,34 +407,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/completedImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/completed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/completedImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/completed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/completed"
-            android:textAllCaps="false"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/ubuntu_medium"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/completedImg"
-            app:layout_constraintTop_toTopOf="@+id/completedImg"
-            app:layout_constraintBottom_toBottomOf="@+id/completedImg"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/ubuntu_medium"
+                    android:text="@string/completed"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/completedImg"
+                    app:layout_constraintStart_toEndOf="@+id/completedImg"
+                    app:layout_constraintTop_toTopOf="@+id/completedImg" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -447,14 +446,90 @@
 
     </androidx.core.widget.NestedScrollView>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent">-->
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/longClickMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:visibility="invisible"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/check"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/done"
+            app:layout_constraintEnd_toEndOf="@+id/done"
+            app:layout_constraintStart_toStartOf="@+id/done"
+            app:layout_constraintTop_toTopOf="@+id/done" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/done"
+            android:layout_width="140dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/custom_color_dark"
+            android:fontFamily="@font/ubuntu_medium"
+            android:text="@string/done"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete"
+            android:layout_width="140dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/custom_color_dark"
+            android:fontFamily="@font/ubuntu_medium"
+            android:text="@string/delete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/XImage"
+            app:layout_constraintStart_toEndOf="@+id/done" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/XImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/delete"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/XCircle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/XVector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_baseline_clear_24"
+                app:layout_constraintBottom_toBottomOf="@+id/XCircle"
+                app:layout_constraintEnd_toEndOf="@+id/XCircle"
+                app:layout_constraintStart_toStartOf="@+id/XCircle"
+                app:layout_constraintTop_toTopOf="@id/XCircle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

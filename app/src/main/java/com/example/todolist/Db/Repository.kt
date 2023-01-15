@@ -14,4 +14,8 @@ class Repository(private val getDao: Dao) {
         getDao.update(item)
     }
 
+    suspend fun delete(item: Item) {
+        getDao.delete(item)
+    }
+
 }

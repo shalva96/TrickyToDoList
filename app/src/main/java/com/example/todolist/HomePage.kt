@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +37,8 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     private val weekDays = calendar.get(7) // Week days
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
+    private var idForDeleteItem: Item? = null
+
 
 
     private lateinit var adapter: HomePageAdapter
@@ -88,6 +91,16 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     private fun clickListener() {
         binding.homeNewTask.setOnClickListener {
             dataModel.newTaskFromHomePage.value = true
+        }
+        binding.delete.setOnClickListener {
+            dataModel.recyclerViewDeleteItemId.observe(viewLifecycleOwner) {
+                idForDeleteItem = it
+            }
+            idForDeleteItem?.let { item -> mItemViewModel.delete(item) }
+            binding.longClickMenu.isVisible = false
+        }
+        binding.XVector.setOnClickListener {
+            binding.longClickMenu.isVisible = false
         }
 
     }
@@ -348,9 +361,11 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     override fun onClick(item: Item) {
         dataModel.updateFragment.value = true
         dataModel.recyclerViewItemId.value = item
-
     }
 
-
+    override fun onLongClick(item: Item) {
+        dataModel.recyclerViewDeleteItemId.value = item
+        binding.longClickMenu.isVisible = true
+    }
 
 }

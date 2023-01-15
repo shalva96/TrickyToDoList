@@ -5,14 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.DataClass.HomePageData
 import com.example.todolist.Db.Item
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
 
-class HomePageAdapter(val listener: Listener?) : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
+class HomePageAdapter(private val listener: Listener?) : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
 
     private var toDoList = emptyList<Item>()
 
@@ -25,11 +27,27 @@ class HomePageAdapter(val listener: Listener?) : RecyclerView.Adapter<HomePageAd
             binding.descriptionSample.text = item.text
             binding.dateSample.text = item.date
             if (binding.dateSample.text == " ") binding.dateSample.visibility = View.GONE
+            when (item.color) {
+                0 -> { binding.smallRedCircle.isVisible = true }
+                1 -> { binding.smallOrangeCircle.isVisible = true  }
+                2 -> { binding.smallYellowCircle.isVisible = true  }
+                3 -> { binding.smallGreenCircle.isVisible = true }
+                4 -> { binding.smallLightblueCircle.isVisible = true  }
+                5 -> { binding.smallBlueCircle.isVisible = true  }
+                6 -> { binding.smallPurpleCircle.isVisible = true  }
+                7 -> { binding.smallLightpurpleCircle.isVisible = true  }
+                8 -> { binding.smallPinkCircle.isVisible = true  }
+            }
             Log.d("MyTag", "${item.color}")
 
             binding.itemLayout.setOnClickListener {
                 listener?.onClick(item)
             }
+            binding.itemLayout.setOnLongClickListener {
+                listener?.onLongClick(item)
+                true
+            }
+
         }
     }
 
@@ -56,6 +74,7 @@ class HomePageAdapter(val listener: Listener?) : RecyclerView.Adapter<HomePageAd
 
     interface Listener {
         fun onClick(item: Item)
+        fun onLongClick(item: Item)
     }
 
 

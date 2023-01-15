@@ -7,6 +7,8 @@
     <!-- Home Page -->
     <string name="date">July, 2022</string>
     <string name="addBtn">New task</string>
+    <string name="done">Done</string>
+    <string name="delete">Delete</string>
     <string name="to_do">To do</string>
     <string name="sort_by">sort by</string>
     <string name="completed">Completed</string>

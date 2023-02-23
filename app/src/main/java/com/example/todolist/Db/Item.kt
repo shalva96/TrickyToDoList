@@ -1,6 +1,6 @@
 package com.example.todolist.Db
 
-import android.os.Parcelable
+import android.widget.CheckBox
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

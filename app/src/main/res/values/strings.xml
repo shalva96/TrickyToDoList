@@ -22,5 +22,7 @@
     <string name="addTv">Stuff to do</string>
     <string name="addEditTv">Type your task here</string>
 
+    <string name="strike_text">1.<strike>Complete open water diving certification</strike></string>
+
 
 </resources>

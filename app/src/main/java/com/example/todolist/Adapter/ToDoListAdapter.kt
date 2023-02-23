@@ -1,27 +1,32 @@
 package com.example.todolist.Adapter
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.CompoundButton
+import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolist.DataClass.HomePageData
+import com.example.todolist.DataClass.DataModel
+import com.example.todolist.Db.Dao
 import com.example.todolist.Db.Item
+import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
 
-class HomePageAdapter(private val listener: Listener?) : RecyclerView.Adapter<HomePageAdapter.HomePageHolder>() {
+class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<ToDoListAdapter.ToDoListHolder>() {
 
     private var toDoList = emptyList<Item>()
 
-    inner class HomePageHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ToDoItemBinding.bind(view)
 
-
+        @SuppressLint("ResourceAsColor")
         fun setData(item: Item, listener: Listener?) {
             binding.checkboxSample.isChecked = item.checked
             binding.descriptionSample.text = item.text
@@ -38,27 +43,34 @@ class HomePageAdapter(private val listener: Listener?) : RecyclerView.Adapter<Ho
                 7 -> { binding.smallLightpurpleCircle.isVisible = true  }
                 8 -> { binding.smallPinkCircle.isVisible = true  }
             }
-            Log.d("MyTag", "${item.color}")
 
             binding.itemLayout.setOnClickListener {
-                listener?.onClick(item)
+                listener?.onClick(item, binding)
             }
             binding.itemLayout.setOnLongClickListener {
                 listener?.onLongClick(item)
                 true
             }
-
+//            binding.checkboxSample.setOnCheckedChangeListener { _ , isChecked ->
+////                item.id?.let { listener?.checkBox(it, isChecked) }
+//                listener?.checkBox(item.id!!, isChecked)
+//            }
+            binding.checkboxSample.setOnClickListener {
+                if ( binding.checkboxSample.isChecked ) {
+                    listener?.checkBox(item.id!!, true)
+                }
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePageHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoListHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.to_do_item, parent, false)
-        return HomePageHolder(view)
+        return ToDoListHolder(view)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: HomePageHolder, position: Int) {
+    override fun onBindViewHolder(holder: ToDoListHolder, position: Int) {
         val currentItem = toDoList[position]
         holder.setData(currentItem, listener)
     }
@@ -68,14 +80,13 @@ class HomePageAdapter(private val listener: Listener?) : RecyclerView.Adapter<Ho
     }
 
     fun addItem(item: List<Item>) {
-        this.toDoList = item
-        notifyDataSetChanged()
+            this.toDoList = item
+            notifyDataSetChanged()
     }
 
     interface Listener {
-        fun onClick(item: Item)
+        fun onClick(item: Item, binding: ToDoItemBinding)
         fun onLongClick(item: Item)
+        fun checkBox(id: Int, checked: Boolean)
     }
-
-
 }

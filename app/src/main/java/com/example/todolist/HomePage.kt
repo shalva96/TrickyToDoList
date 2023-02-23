@@ -2,26 +2,27 @@ package com.example.todolist
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.Adapter.HomePageAdapter
+import com.example.todolist.Adapter.CompletedListAdapter
+import com.example.todolist.Adapter.ToDoListAdapter
 import com.example.todolist.DataClass.DataModel
-import com.example.todolist.DataClass.HomePageData
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.databinding.FragmentHomePageBinding
+import com.example.todolist.databinding.ToDoItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomePage : Fragment(), HomePageAdapter.Listener {
+class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
 
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
@@ -38,10 +39,14 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
     private var idForDeleteItem: Item? = null
+    private var allIdForDeleteItem = emptyList<Int?>()
+    private var adapterBinding: ToDoItemBinding? = null
 
 
 
-    private lateinit var adapter: HomePageAdapter
+    private lateinit var toDoListAdapter: ToDoListAdapter
+    private lateinit var completedListAdapter: CompletedListAdapter
+
     private lateinit var mItemViewModel: ItemViewModel
 
 
@@ -50,7 +55,7 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentHomePageBinding.inflate(inflater)
+        _binding = FragmentHomePageBinding.inflate(inflater, container, false)
         return binding.root
 
 
@@ -63,12 +68,17 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
         calendar()
         clickListener()
 
+        if (binding.longClickMenu.isVisible) {
+
+        }else {
+            adapterBinding?.toDoBackground?.setBackgroundResource(R.color.white)
+        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
     }
 
     companion object {
@@ -76,35 +86,53 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     }
 
     private fun init() {
-        val recyclerView = binding.todoRecyclerView
-        adapter = HomePageAdapter(this)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        val toDoRecyclerView = binding.todoRecyclerView
+        toDoListAdapter = ToDoListAdapter(this)
+        toDoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        toDoRecyclerView.adapter = toDoListAdapter
+
+        val completedRecyclerView = binding.completedRecyclerView
+        completedListAdapter = CompletedListAdapter(this)
+        completedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        completedRecyclerView.adapter = completedListAdapter
+
+
         //ItemViewModel
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        mItemViewModel.readAllData.observe(viewLifecycleOwner) { item ->
-            adapter.addItem(item)
+        mItemViewModel.unCheck.observe(viewLifecycleOwner) { item ->
+            toDoListAdapter.addItem(item)
+        }
+        mItemViewModel.checked.observe(viewLifecycleOwner) { item ->
+            completedListAdapter.addItem(item)
         }
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun clickListener() {
+
         binding.homeNewTask.setOnClickListener {
             dataModel.newTaskFromHomePage.value = true
         }
+
         binding.delete.setOnClickListener {
             dataModel.recyclerViewDeleteItemId.observe(viewLifecycleOwner) {
                 idForDeleteItem = it
             }
             idForDeleteItem?.let { item -> mItemViewModel.delete(item) }
+//            allIdForDeleteItem.let { item -> mItemViewModel.deleteSome(item)}
+//            for (item in allIdForDeleteItem) {
+//                mItemViewModel.deleteSome(listOf(item))
+//            }
+//            allIdForDeleteItem.forEach { itemId ->
+//                mItemViewModel.deleteSome(listOf(itemId))
+//            }
             binding.longClickMenu.isVisible = false
         }
         binding.XVector.setOnClickListener {
             binding.longClickMenu.isVisible = false
         }
-
     }
-
 
     @SuppressLint("ResourceAsColor")
     private fun calendar() {
@@ -323,7 +351,22 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
                 sevenDay.setTextColor(R.color.custom_color_active_day)
                 sunday.setBackgroundResource(R.drawable.ic_rectangle)
                 var firstDay = date.format(Date()).toInt() - 6
-                if (firstDay <= 0) {
+                if (firstDay == -1) {
+                    firstDay = prevMonthDays - 1
+                    dayOne.text = firstDay.toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayTwo.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayThree.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFour.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    dayFive.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    daySix.text = (++firstDay).toString()
+                    if (firstDay == prevMonthDays) firstDay = 0
+                    daySeven.text = (++firstDay).toString()
+                }else if (firstDay <= 0) {
                     firstDay = prevMonthDays - 5
                     dayOne.text = firstDay.toString()
                     if (firstDay == prevMonthDays) firstDay = 0
@@ -358,14 +401,37 @@ class HomePage : Fragment(), HomePageAdapter.Listener {
     } // Calendar end!!
 
     // Interface from HomePageAdapter
-    override fun onClick(item: Item) {
-        dataModel.updateFragment.value = true
-        dataModel.recyclerViewItemId.value = item
+    override fun onClick(item: Item, adapterBind: ToDoItemBinding) {
+        if (!binding.longClickMenu.isVisible) {
+            dataModel.updateFragment.value = true
+            dataModel.recyclerViewItemId.value = item
+        }
+//        adapterBind.checkboxSample.setOnCheckedChangeListener { buttonView, isChecked ->
+//            item.id?.let { mItemViewModel.updateCheckboxForItem(it, isChecked ) }
+//        }
+        adapterBinding = adapterBind
+        allIdForDeleteItem = listOf(item.id)
+        Log.d("MyTag", "$allIdForDeleteItem")
     }
 
     override fun onLongClick(item: Item) {
         dataModel.recyclerViewDeleteItemId.value = item
         binding.longClickMenu.isVisible = true
+
+
+        adapterBinding?.toDoBackground?.setOnClickListener {
+            dataModel.recyclerViewDeleteItemId.value = item
+        }
+
     }
 
+    override fun checkBox(id: Int, checked: Boolean) {
+
+        mItemViewModel.updateCheckboxForItem(id, checked)
+        Log.d("MyTag", "$id")
+    }
+
+    override fun checkBoxCompleted(id: Int, checked: Boolean) {
+        mItemViewModel.updateCheckboxForItem(id, checked)
+    }
 }

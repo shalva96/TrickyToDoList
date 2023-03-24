@@ -64,7 +64,7 @@ class UpdateFragment() : Fragment(), DataSelected {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentUpdateBinding.inflate(inflater)
+        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
         return binding.root
 
     }

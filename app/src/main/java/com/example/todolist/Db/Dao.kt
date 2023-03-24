@@ -14,8 +14,11 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertItem(item: Item)
 
+    @Query("SELECT (SELECT COUNT(*) FROM items) == 0")
+    fun itemCount() : Boolean
+
     @Query("SELECT * FROM items")
-    fun getAllItems(): LiveData<List<Item>>
+    fun readAllData(): LiveData<List<Item>>
 
     @Query("SELECT * FROM items WHERE checkbox is 0")
     fun unCheck(): LiveData<List<Item>>

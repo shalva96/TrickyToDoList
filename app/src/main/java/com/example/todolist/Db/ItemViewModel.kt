@@ -35,6 +35,10 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun itemCount(): Boolean {
+        return repository.itemCount()
+    }
+
     fun delete(item: Item) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.delete(item)

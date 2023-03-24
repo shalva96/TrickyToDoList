@@ -45,7 +45,7 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
             }
 
             binding.itemLayout.setOnClickListener {
-                listener?.onClick(item, binding)
+                listener?.onClick(item)
             }
             binding.itemLayout.setOnLongClickListener {
                 listener?.onLongClick(item)
@@ -85,8 +85,9 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
     }
 
     interface Listener {
-        fun onClick(item: Item, binding: ToDoItemBinding)
+        fun onClick(item: Item)
         fun onLongClick(item: Item)
         fun checkBox(id: Int, checked: Boolean)
     }
+
 }

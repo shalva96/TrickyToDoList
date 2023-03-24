@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.Adapter.CompletedListAdapter
 import com.example.todolist.Adapter.ToDoListAdapter
 import com.example.todolist.DataClass.DataModel
+import com.example.todolist.Db.Dao
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.databinding.FragmentHomePageBinding
 import com.example.todolist.databinding.ToDoItemBinding
+import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,10 +47,9 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     private var adapterBinding: ToDoItemBinding? = null
 
 
-
+    private lateinit var sharedPref: SharedPref
     private lateinit var toDoListAdapter: ToDoListAdapter
     private lateinit var completedListAdapter: CompletedListAdapter
-
     private lateinit var mItemViewModel: ItemViewModel
 
 
@@ -68,11 +71,11 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
         calendar()
         clickListener()
 
-        if (binding.longClickMenu.isVisible) {
-
-        }else {
-            adapterBinding?.toDoBackground?.setBackgroundResource(R.color.white)
-        }
+//        if (binding.longClickMenu.isVisible) {
+//
+//        }else {
+//            adapterBinding?.toDoBackground?.setBackgroundResource(R.color.white)
+//        }
 
     }
 
@@ -401,15 +404,12 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     } // Calendar end!!
 
     // Interface from HomePageAdapter
-    override fun onClick(item: Item, adapterBind: ToDoItemBinding) {
+    override fun onClick(item: Item) {
         if (!binding.longClickMenu.isVisible) {
             dataModel.updateFragment.value = true
             dataModel.recyclerViewItemId.value = item
         }
-//        adapterBind.checkboxSample.setOnCheckedChangeListener { buttonView, isChecked ->
-//            item.id?.let { mItemViewModel.updateCheckboxForItem(it, isChecked ) }
-//        }
-        adapterBinding = adapterBind
+
         allIdForDeleteItem = listOf(item.id)
         Log.d("MyTag", "$allIdForDeleteItem")
     }
@@ -417,7 +417,13 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     override fun onLongClick(item: Item) {
         dataModel.recyclerViewDeleteItemId.value = item
         binding.longClickMenu.isVisible = true
-
+        binding.fullScreen.setOnClickListener {
+            binding.longClickMenu.isVisible = false
+        }
+        binding.done.setOnClickListener {
+            mItemViewModel.updateCheckboxForItem(itemId = item.id!!, true)
+            binding.longClickMenu.isVisible = false
+        }
 
         adapterBinding?.toDoBackground?.setOnClickListener {
             dataModel.recyclerViewDeleteItemId.value = item
@@ -426,7 +432,6 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     }
 
     override fun checkBox(id: Int, checked: Boolean) {
-
         mItemViewModel.updateCheckboxForItem(id, checked)
         Log.d("MyTag", "$id")
     }

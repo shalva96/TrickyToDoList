@@ -96,7 +96,7 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
         toDoListAdapter = ToDoListAdapter(this)
         toDoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         toDoRecyclerView.adapter = toDoListAdapter
-
+//sad
         val completedRecyclerView = binding.completedRecyclerView
         completedListAdapter = CompletedListAdapter(this)
         completedRecyclerView.layoutManager = LinearLayoutManager(requireContext())

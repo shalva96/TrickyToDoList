@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="todoBg">#32CCFF</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Onboarding Colors -->
+    <color name="custom_color_primary">#F2F4F5</color>
+    <color name="custom_color_dark">#1E212B</color>
+    <color name="custom_calendar">#C5D6E012</color>
+    <color name="custom_weeks">#4D1F222C</color>
+    <color name="custom_color_sort">#B9C8CF</color>
+
+    <!-- Calendar Colors -->
+    <color name="custom_color_active_day">#32CCFF</color>
+
+    <!-- Circle colors -->
+    <color name="firs_color">#FF453A</color>
+    <color name="second_color">#FF9F0C</color>
+    <color name="three_color">#FFD50C</color>
+    <color name="four_color">#32D74B</color>
+    <color name="five_color">#64D2FF</color>
+    <color name="six_color">#0984FF</color>
+    <color name="seven_color">#5E5CE6</color>
+    <color name="eight_color">#BF5AF2</color>
+    <color name="nine_color">#FF375F</color>
+
+    <!-- Add task colors -->=
+
+
+    <color name="added_item">#202431</color>
+
+</resources>

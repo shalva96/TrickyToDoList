@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
@@ -26,11 +27,8 @@ import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UpdateFragment() : Fragment(), DataSelected {
+class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding::inflate), DataSelected {
 
-
-    private var _binding: FragmentUpdateBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
@@ -60,26 +58,35 @@ class UpdateFragment() : Fragment(), DataSelected {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
-        return binding.root
+
+    override fun start() {
+        init()
+        getVariableForUpdate()
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        getVariableForUpdate()
-        clickListener()
-
+    private fun init() {
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         sharedPref = SharedPref(requireContext())
-
-
     }
+
+    override fun onClick() {
+        binding.updateBackContainer.setOnClickListener {
+            dataModel.backFromAddPage.value = true
+        }
+        binding.updateCalendarIcon.setOnClickListener {
+            showDatePicker()
+        }
+        binding.updateAddPageSaveBtn.setOnClickListener {
+            updateItem()
+        }
+        binding.updateAddPageCancelBtn.setOnClickListener {
+            dataModel.saveAndBackFromAddPage.value = true
+        }
+        circleClickListener()
+    }
+
 
     private fun getVariableForUpdate() {
 
@@ -99,21 +106,6 @@ class UpdateFragment() : Fragment(), DataSelected {
         }
     }
 
-    private fun clickListener() {
-        binding.updateBackContainer.setOnClickListener {
-            dataModel.backFromAddPage.value = true
-        }
-        binding.updateCalendarIcon.setOnClickListener {
-            showDatePicker()
-        }
-        binding.updateAddPageSaveBtn.setOnClickListener {
-            updateItem()
-        }
-        binding.updateAddPageCancelBtn.setOnClickListener {
-            dataModel.saveAndBackFromAddPage.value = true
-        }
-        circleClickListener()
-    }
 
     private fun updateItem() {
         val description = binding.updateAddEditText.text.toString()
@@ -144,10 +136,6 @@ class UpdateFragment() : Fragment(), DataSelected {
         fun newInstance() = UpdateFragment()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     // This is function that will be invoked in our fragment when a user picks a date
     @RequiresApi(Build.VERSION_CODES.N)

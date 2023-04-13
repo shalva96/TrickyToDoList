@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +28,10 @@ class ToDoListAdapter(private val listener: Listener?) :
     RecyclerView.Adapter<ToDoListAdapter.ToDoListHolder>() {
 
     private var toDoList = emptyList<Item>()
+    private var dataItemForClicks = emptyList<DataItemForClicks>()
 
     inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val context = itemView.context
         private val binding = ToDoItemBinding.bind(view)
 
         @SuppressLint("ResourceAsColor")
@@ -80,7 +83,15 @@ class ToDoListAdapter(private val listener: Listener?) :
             binding.itemLayout.setOnClickListener {
                 listener?.onClick(item)
 
-                binding.toDoBackground.setBackgroundColor(Color.argb(153, 135, 206, 235))
+                if (binding.toDoBackground.getBackground().getConstantState()!!
+                        .equals(ContextCompat.getDrawable(context, R.color.white)!!.getConstantState())) {
+
+                    binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
+
+                }else {
+                    binding.toDoBackground.setBackgroundColor(R.color.white)
+                }
+
 
             }
             binding.itemLayout.setOnLongClickListener {

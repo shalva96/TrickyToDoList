@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.Adapter.CompletedListAdapter
 import com.example.todolist.Adapter.ToDoListAdapter
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Dao
 import com.example.todolist.Db.Item
@@ -28,10 +29,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
+class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::inflate), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
 
-    private var _binding: FragmentHomePageBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
 
     //Calendar
@@ -56,67 +55,13 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     private lateinit var mItemViewModel: ItemViewModel
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
-        _binding = FragmentHomePageBinding.inflate(inflater, container, false)
-        return binding.root
-
-
-    }
-
-    @SuppressLint("ResourceAsColor")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun start() {
         init()
         calendar()
-        clickListener()
-
-//        if (binding.longClickMenu.isVisible) {
-//
-//        }else {
-//            adapterBinding?.toDoBackground?.setBackgroundResource(R.color.white)
-//        }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        fun newInstance() = HomePage()
-    }
-
-    private fun init() {
-        val toDoRecyclerView = binding.todoRecyclerView
-        toDoListAdapter = ToDoListAdapter(this)
-        toDoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        toDoRecyclerView.adapter = toDoListAdapter
-//sad
-        val completedRecyclerView = binding.completedRecyclerView
-        completedListAdapter = CompletedListAdapter(this)
-        completedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        completedRecyclerView.adapter = completedListAdapter
-
-
-        //ItemViewModel
-        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        mItemViewModel.unCheck.observe(viewLifecycleOwner) { item ->
-            toDoListAdapter.addItem(item)
-        }
-        mItemViewModel.checked.observe(viewLifecycleOwner) { item ->
-            completedListAdapter.addItem(item)
-        }
-
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private fun clickListener() {
-
+    override fun onClick() {
         binding.sortBy.setOnClickListener {
             if (!binding.sortBlock.isVisible) {
                 binding.sortBlock.visibility = View.VISIBLE
@@ -169,6 +114,35 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
             binding.longClickMenu.isVisible = false
         }
     }
+
+
+    companion object {
+        fun newInstance() = HomePage()
+    }
+
+    private fun init() {
+        val toDoRecyclerView = binding.todoRecyclerView
+        toDoListAdapter = ToDoListAdapter(this)
+        toDoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        toDoRecyclerView.adapter = toDoListAdapter
+
+        val completedRecyclerView = binding.completedRecyclerView
+        completedListAdapter = CompletedListAdapter(this)
+        completedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        completedRecyclerView.adapter = completedListAdapter
+
+
+        //ItemViewModel
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        mItemViewModel.unCheck.observe(viewLifecycleOwner) { item ->
+            toDoListAdapter.addItem(item)
+        }
+        mItemViewModel.checked.observe(viewLifecycleOwner) { item ->
+            completedListAdapter.addItem(item)
+        }
+
+    }
+
 
     @SuppressLint("ResourceAsColor")
     private fun calendar() {

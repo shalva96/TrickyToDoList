@@ -8,30 +8,26 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
-import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.FragmentAddNewTaskBinding
 import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddNewTaskFragment : Fragment(), DataSelected {
+class AddNewTaskFragment :
+    BaseFragment<FragmentAddNewTaskBinding>(FragmentAddNewTaskBinding::inflate), DataSelected {
 
-    private var _binding: FragmentAddNewTaskBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
@@ -60,30 +56,35 @@ class AddNewTaskFragment : Fragment(), DataSelected {
         }
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentAddNewTaskBinding.inflate(inflater)
-        return binding.root
+    override fun start() {
+        init()
     }
 
-    fun onClick(item: Item) {
-        dataModel.newTaskFromHomePage.value = true
-        Toast.makeText(requireActivity(), "Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val db = MainDb.getDb(requireContext())
-
+    private fun init() {
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         sharedPref = SharedPref(requireContext())
-        clickListener()
-
-
     }
+
+    override fun onClick() {
+
+        binding.backContainer.setOnClickListener {
+            dataModel.backFromAddPage.value = true
+        }
+
+        binding.calendarIcon.setOnClickListener {
+            showDatePicker()
+        }
+
+        circleClickListener()
+        // add DB
+        binding.addPageSaveBtn.setOnClickListener {
+            insertDataToDatabase()
+        }
+        binding.addPageCancelBtn.setOnClickListener {
+            dataModel.saveAndBackFromAddPage.value = true
+        }
+    }
+
 
     private fun insertDataToDatabase() {
 
@@ -120,12 +121,6 @@ class AddNewTaskFragment : Fragment(), DataSelected {
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-
     // This is function that will be invoked in our fragment when a user picks a date
     @RequiresApi(Build.VERSION_CODES.N)
     override fun receiveDate(year: Int, month: Int, dayOfMonth: Int) {
@@ -155,15 +150,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
 
     }
 
-    private fun clickListener() {
-        binding.backContainer.setOnClickListener {
-            dataModel.backFromAddPage.value = true
-        }
-
-        binding.calendarIcon.setOnClickListener {
-            showDatePicker()
-        }
-
+    private fun circleClickListener() {
 
         binding.firstInnerCircle.setOnClickListener {
             binding.firsOval.visibility = View.VISIBLE
@@ -274,13 +261,6 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             color = 8
         }
 
-        // add DB
-        binding.addPageSaveBtn.setOnClickListener {
-            insertDataToDatabase()
-        }
-        binding.addPageCancelBtn.setOnClickListener {
-            dataModel.saveAndBackFromAddPage.value = true
-        }
     }
 }
 

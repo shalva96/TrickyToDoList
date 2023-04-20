@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ import com.example.todolist.databinding.ToDoItemBinding
 import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::inflate), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
@@ -44,12 +46,9 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
     private var idForDeleteItem: Item? = null
-    private var adapterBinding: ToDoItemBinding? = null
-    private var myIdItems = listOf<Int>()
+    private var myIdItems = ArrayList<Int>()
 
 
-
-    private lateinit var sharedPref: SharedPref
     private lateinit var toDoListAdapter: ToDoListAdapter
     private lateinit var completedListAdapter: CompletedListAdapter
     private lateinit var mItemViewModel: ItemViewModel
@@ -100,14 +99,12 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         }
 
         binding.delete.setOnClickListener {
-            dataModel.recyclerViewDeleteItemId.observe(viewLifecycleOwner) {
-                idForDeleteItem = it
-            }
             idForDeleteItem?.let { item -> mItemViewModel.delete(item) }
 
-            myIdItems.forEach { item ->
-                mItemViewModel.deleteSome(listOf(item))
-            }
+            mItemViewModel.deleteSome(myIdItems)
+
+            dataModel.backFromAddPage.value = true
+
             binding.longClickMenu.isVisible = false
         }
         binding.XVector.setOnClickListener {
@@ -417,11 +414,15 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             dataModel.recyclerViewItemId.value = item
         }
 
-        myIdItems = myIdItems + listOf(item.id) as List<Int>
+        if (myIdItems.contains(item.id)) {
+            myIdItems.remove(item.id)
+        } else {
+            myIdItems.addAll(listOf(item.id!!))
+        }
     }
 
     override fun onLongClick(item: Item) {
-        dataModel.recyclerViewDeleteItemId.value = item
+        myIdItems.add(item.id!!)
         binding.longClickMenu.isVisible = true
         binding.fullScreen.setOnClickListener {
             binding.longClickMenu.isVisible = false
@@ -431,16 +432,11 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             binding.longClickMenu.isVisible = false
         }
 
-        adapterBinding?.toDoBackground?.setOnClickListener {
-            dataModel.recyclerViewDeleteItemId.value = item
-        }
-
 
     }
 
     override fun checkBox(id: Int, checked: Boolean) {
         mItemViewModel.updateCheckboxForItem(id, checked)
-        Log.d("MyTag", "$id")
     }
 
     override fun checkBoxCompleted(id: Int, checked: Boolean) {

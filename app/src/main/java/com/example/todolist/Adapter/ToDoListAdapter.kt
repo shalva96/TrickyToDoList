@@ -11,10 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.annotation.CheckResult
+import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.DataClass.DataItemForClicks
 import com.example.todolist.DataClass.DataModel
@@ -28,18 +31,17 @@ class ToDoListAdapter(private val listener: Listener?) :
     RecyclerView.Adapter<ToDoListAdapter.ToDoListHolder>() {
 
     private var toDoList = emptyList<Item>()
-    private var dataItemForClicks = emptyList<DataItemForClicks>()
 
     inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val context = itemView.context
         private val binding = ToDoItemBinding.bind(view)
+        private var itemForBgChange = ArrayList<Item>()
 
         @SuppressLint("ResourceAsColor")
         fun setData(item: Item, listener: Listener?) {
             binding.checkboxSample.isChecked = item.checked
             binding.descriptionSample.text = item.text
             binding.dateSample.text = item.date
-            if (binding.dateSample.text == "null") binding.dateSample.visibility = View.GONE
+            if (binding.dateSample.text.isNullOrEmpty()) binding.dateSample.visibility = View.GONE
             when (item.color) {
                 0 -> {
                     binding.smallRedCircle.isVisible = true
@@ -69,34 +71,35 @@ class ToDoListAdapter(private val listener: Listener?) :
                     binding.smallPinkCircle.isVisible = true
                 }
                 else -> {
-                    binding.smallBlueCircle.isVisible = false
-                    binding.smallGreenCircle.isVisible = false
-                    binding.smallLightblueCircle.isVisible = false
-                    binding.smallOrangeCircle.isVisible = false
-                    binding.smallPinkCircle.isVisible = false
-                    binding.smallLightpurpleCircle.isVisible = false
-                    binding.smallRedCircle.isVisible = false
-                    binding.smallYellowCircle.isVisible = false
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
                 }
             }
 
             binding.itemLayout.setOnClickListener {
                 listener?.onClick(item)
 
-                if (binding.toDoBackground.getBackground().getConstantState()!!
-                        .equals(ContextCompat.getDrawable(context, R.color.white)!!.getConstantState())) {
 
+                if (itemForBgChange.contains(item)) {
+                    binding.toDoBackground.setBackgroundColor(Color.WHITE)
+                    itemForBgChange.remove(item)
+                } else {
+                    itemForBgChange.addAll(listOf(item))
                     binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
-
-                }else {
-                    binding.toDoBackground.setBackgroundColor(R.color.white)
                 }
-
 
             }
             binding.itemLayout.setOnLongClickListener {
                 listener?.onLongClick(item)
-                binding.toDoBackground.setBackgroundColor(Color.argb(153, 135, 206, 235))
+                itemForBgChange.addAll(listOf(item))
+                binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
+
                 true
             }
             binding.checkboxSample.setOnClickListener {

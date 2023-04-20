@@ -27,7 +27,7 @@ class Repository(private val getDao: Dao) {
         getDao.delete(item)
     }
 
-    suspend fun deleteSome(itemId: List<Int>) {
+    suspend fun deleteSome(itemId: ArrayList<Int>) {
         getDao.deleteSome(itemId)
     }
 

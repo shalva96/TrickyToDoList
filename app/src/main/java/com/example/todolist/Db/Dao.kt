@@ -17,16 +17,16 @@ interface Dao {
     @Query("SELECT (SELECT COUNT(*) FROM items) == 0")
     fun itemCount() : Boolean
 
-    @Query("SELECT * FROM items ORDER BY dates DESC")
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY dates DESC")
     fun sortByDate(): LiveData<List<Item>>
 
     @Query("SELECT * FROM items")
     fun readAllData(): LiveData<List<Item>>
 
-    @Query("SELECT * FROM items ORDER BY colors ASC")
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY colors ASC")
     fun sortByColor(): LiveData<List<Item>>
 
-    @Query("SELECT * FROM items ORDER BY id DESC")
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY id DESC")
     fun sortByDateAdded(): LiveData<List<Item>>
 
     @Query("SELECT * FROM items WHERE checkbox is 0")
@@ -45,6 +45,6 @@ interface Dao {
     suspend fun delete(item: Item)
 
     @Query("DELETE FROM items WHERE id IN (:itemId)")
-    suspend fun deleteSome(itemId: List<Int>)
+    suspend fun deleteSome(itemId: ArrayList<Int>)
 
 }

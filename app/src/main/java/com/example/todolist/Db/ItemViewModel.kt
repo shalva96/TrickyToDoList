@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.MalformedURLException
 
 class ItemViewModel(application: Application): AndroidViewModel(application) {
 
@@ -51,7 +52,7 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun deleteSome(itemId: List<Int>) {
+    fun deleteSome(itemId: ArrayList<Int>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteSome(itemId)
         }

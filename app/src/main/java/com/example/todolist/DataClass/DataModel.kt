@@ -33,16 +33,5 @@ open class DataModel: ViewModel() {
         MutableLiveData<Item>()
     }
 
-//    val toDoListCheckBox: MutableLiveData<Boolean> by lazy {
-//        MutableLiveData<Boolean>()
-//    }
-//    val toDoListCheckBoxId: MutableLiveData<Int> by lazy {
-//        MutableLiveData<Int>()
-//    }
-
-    val recyclerViewDeleteItemId: MutableLiveData<Item> by lazy {
-        MutableLiveData<Item>()
-    }
-
 }
 

@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
@@ -26,11 +27,8 @@ import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UpdateFragment() : Fragment(), DataSelected {
+class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding::inflate), DataSelected {
 
-
-    private var _binding: FragmentUpdateBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
@@ -56,37 +54,34 @@ class UpdateFragment() : Fragment(), DataSelected {
 
         override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
             dateSelected.receiveDate(year, month, dayOfMonth)
-            Log.d("MyTag", "Got the date")
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun start() {
+        init()
+        getVariableForUpdate()
+    }
 
+    override fun onClick() {
+        clickListener()
+    }
+
+    private fun init() {
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        sharedPref = SharedPref(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        getVariableForUpdate()
-        clickListener()
-
-        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        sharedPref = SharedPref(requireContext())
-
-
     }
 
     private fun getVariableForUpdate() {
-
         dataModel.recyclerViewItemId.observe(viewLifecycleOwner) {
             this.itemId = it.id!!
             binding.updateAddEditText.setText(it.text)
             if (it.date != " ") {
+                viewFormatDate = it.date
+                color = it.color
                 binding.updateCalendarIcon.visibility = View.GONE
                 binding.updateChoseDate.visibility = View.VISIBLE
                 binding.updateSelectedDate.text = it.date
@@ -95,7 +90,6 @@ class UpdateFragment() : Fragment(), DataSelected {
                 binding.updateChoseDate.visibility = View.GONE
                 binding.updateCalendarIcon.visibility = View.VISIBLE
             }
-
         }
     }
 
@@ -144,10 +138,6 @@ class UpdateFragment() : Fragment(), DataSelected {
         fun newInstance() = UpdateFragment()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     // This is function that will be invoked in our fragment when a user picks a date
     @RequiresApi(Build.VERSION_CODES.N)
@@ -289,6 +279,7 @@ class UpdateFragment() : Fragment(), DataSelected {
             color = 8
         }
     }
+
 
 
 }

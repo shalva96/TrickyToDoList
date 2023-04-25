@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
@@ -28,15 +29,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddNewTaskFragment : Fragment(), DataSelected {
+class AddNewTaskFragment :
+    BaseFragment<FragmentAddNewTaskBinding>(FragmentAddNewTaskBinding::inflate), DataSelected {
 
-    private var _binding: FragmentAddNewTaskBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
     var color: Int = 9
-    var viewFormatDate: String = " "
+    private var viewFormatDate: String = " "
 
     // Class for chose date
     class DatePickerFragment(private val dateSelected: DataSelected) : DialogFragment(),
@@ -61,12 +61,13 @@ class AddNewTaskFragment : Fragment(), DataSelected {
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentAddNewTaskBinding.inflate(inflater)
-        return binding.root
+    override fun start() {
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        sharedPref = SharedPref(requireContext())
+    }
+
+    override fun onClick() {
+        clickListener()
     }
 
     fun onClick(item: Item) {
@@ -74,16 +75,6 @@ class AddNewTaskFragment : Fragment(), DataSelected {
         Toast.makeText(requireActivity(), "Clicked on: ${item.id}", Toast.LENGTH_LONG).show()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val db = MainDb.getDb(requireContext())
-
-        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        sharedPref = SharedPref(requireContext())
-        clickListener()
-
-
-    }
 
     private fun insertDataToDatabase() {
 
@@ -117,12 +108,6 @@ class AddNewTaskFragment : Fragment(), DataSelected {
 
     companion object {
         fun newInstance() = AddNewTaskFragment()
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 
@@ -283,6 +268,7 @@ class AddNewTaskFragment : Fragment(), DataSelected {
             dataModel.saveAndBackFromAddPage.value = true
         }
     }
+
 }
 
 

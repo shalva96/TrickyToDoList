@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.Adapter.CompletedListAdapter
 import com.example.todolist.Adapter.ToDoListAdapter
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Dao
 import com.example.todolist.Db.Item
@@ -26,10 +27,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
+class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::inflate), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
 
-    private var _binding: FragmentHomePageBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
 
     //Calendar
@@ -47,42 +46,20 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     private var adapterBinding: ToDoItemBinding? = null
 
 
-    private lateinit var sharedPref: SharedPref
     private lateinit var toDoListAdapter: ToDoListAdapter
     private lateinit var completedListAdapter: CompletedListAdapter
     private lateinit var mItemViewModel: ItemViewModel
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentHomePageBinding.inflate(inflater, container, false)
-        return binding.root
-
-
-    }
-
-    @SuppressLint("ResourceAsColor")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun start() {
         init()
         calendar()
+    }
+
+    override fun onClick() {
         clickListener()
-
-//        if (binding.longClickMenu.isVisible) {
-//
-//        }else {
-//            adapterBinding?.toDoBackground?.setBackgroundResource(R.color.white)
-//        }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     companion object {
         fun newInstance() = HomePage()
@@ -123,13 +100,6 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
                 idForDeleteItem = it
             }
             idForDeleteItem?.let { item -> mItemViewModel.delete(item) }
-//            allIdForDeleteItem.let { item -> mItemViewModel.deleteSome(item)}
-//            for (item in allIdForDeleteItem) {
-//                mItemViewModel.deleteSome(listOf(item))
-//            }
-//            allIdForDeleteItem.forEach { itemId ->
-//                mItemViewModel.deleteSome(listOf(itemId))
-//            }
             binding.longClickMenu.isVisible = false
         }
         binding.XVector.setOnClickListener {
@@ -439,4 +409,5 @@ class HomePage : Fragment(), ToDoListAdapter.Listener, CompletedListAdapter.List
     override fun checkBoxCompleted(id: Int, checked: Boolean) {
         mItemViewModel.updateCheckboxForItem(id, checked)
     }
+
 }

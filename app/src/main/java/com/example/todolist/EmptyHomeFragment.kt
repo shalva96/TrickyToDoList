@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.databinding.FragmentEmptyHomeBinding
 import java.text.SimpleDateFormat
@@ -17,10 +18,8 @@ import java.util.*
 import java.util.Calendar.*
 import kotlin.math.log
 
-class EmptyHomeFragment : Fragment() {
+class EmptyHomeFragment : BaseFragment<FragmentEmptyHomeBinding>(FragmentEmptyHomeBinding::inflate) {
 
-    private var _binding: FragmentEmptyHomeBinding? = null
-    private val binding get() = _binding!!
     private val dataModel: DataModel by activityViewModels()
 
     private val monthAndYear = SimpleDateFormat("MMM yyyy")
@@ -33,13 +32,16 @@ class EmptyHomeFragment : Fragment() {
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
-        _binding = FragmentEmptyHomeBinding.inflate(inflater)
-        return binding.root
+    override fun start() {
+        calendar()
+    }
+
+    override fun onClick() {
+        binding.homeNewTask.setOnClickListener {
+            dataModel.newTaskFromHomePage.value = true
+        }
+
     }
 
 
@@ -48,18 +50,10 @@ class EmptyHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.homeNewTask.setOnClickListener {
-            dataModel.newTaskFromHomePage.value = true
-        }
 
-        calendar()
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     companion object {
         fun newInstance() = EmptyHomeFragment()
@@ -313,5 +307,6 @@ class EmptyHomeFragment : Fragment() {
         }
 
     }
+
 
 }

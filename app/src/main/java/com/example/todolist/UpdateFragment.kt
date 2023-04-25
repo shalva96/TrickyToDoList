@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -49,7 +50,6 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
 
             return DatePickerDialog(requireContext(), this, year, month, dayOfMonth)
 
-
         }
 
         override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -65,6 +65,8 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
     override fun onClick() {
         clickListener()
     }
+
+
 
     private fun init() {
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
@@ -82,6 +84,17 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
             if (it.date != " ") {
                 viewFormatDate = it.date
                 color = it.color
+                when(it.color) {
+                    0 -> binding.firsOval.isVisible = true
+                    1 -> binding.secondOval.isVisible = true
+                    2 -> binding.threeOval.isVisible = true
+                    3 -> binding.fourOval.isVisible = true
+                    4 -> binding.fiveOval.isVisible = true
+                    5 -> binding.sixOval.isVisible = true
+                    6 -> binding.sevenOval.isVisible = true
+                    7 -> binding.eightOval.isVisible = true
+                    8 -> binding.nineOval.isVisible = true
+                }
                 binding.updateCalendarIcon.visibility = View.GONE
                 binding.updateChoseDate.visibility = View.VISIBLE
                 binding.updateSelectedDate.text = it.date

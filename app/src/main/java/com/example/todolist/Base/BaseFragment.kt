@@ -35,8 +35,6 @@ abstract class BaseFragment<VB: ViewBinding>(private var inflate: inflater<VB>):
         _binding = null
     }
 
-
-
     abstract fun start()
     abstract fun onClick()
 

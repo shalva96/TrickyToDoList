@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.Db.Item
 import com.example.todolist.R
@@ -19,13 +20,8 @@ class CompletedListAdapter(private val listener: Listener?) : RecyclerView.Adapt
 
         fun setData(item: Item, listener: Listener?) {
             binding.checkboxSample.isChecked = item.checked
-            binding.descriptionSample.text = item.text
+            binding.descriptionSample.text = HtmlCompat.fromHtml("<strike>${item.text}</strike>", HtmlCompat.FROM_HTML_MODE_LEGACY, null, null)
 
-
-//            binding.checkboxSample.setOnCheckedChangeListener { _ , isChecked ->
-////                item.id?.let { listener?.checkBoxCompleted(it, isChecked) }
-//                listener?.checkBoxCompleted(item.id!!, isChecked)
-//            }
 
             binding.checkboxSample.setOnClickListener {
                 if ( !binding.checkboxSample.isChecked ) {

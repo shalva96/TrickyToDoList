@@ -41,6 +41,8 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     private val weekDays = calendar.get(7) // Week days
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
+    private var myIdItems = ArrayList<Int>()
+
     private var idForDeleteItem: Item? = null
     private var allIdForDeleteItem = emptyList<Int?>()
     private var adapterBinding: ToDoItemBinding? = null
@@ -95,11 +97,13 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             dataModel.newTaskFromHomePage.value = true
         }
 
+
         binding.delete.setOnClickListener {
-            dataModel.recyclerViewDeleteItemId.observe(viewLifecycleOwner) {
-                idForDeleteItem = it
-            }
-            idForDeleteItem?.let { item -> mItemViewModel.delete(item) }
+
+            mItemViewModel.deleteSome(myIdItems)
+
+            dataModel.backFromAddPage.value = true
+
             binding.longClickMenu.isVisible = false
         }
         binding.XVector.setOnClickListener {
@@ -380,11 +384,21 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             dataModel.recyclerViewItemId.value = item
         }
 
-        allIdForDeleteItem = listOf(item.id)
-        Log.d("MyTag", "$allIdForDeleteItem")
+        if (myIdItems.contains(item.id)) {
+            myIdItems.remove(item.id)
+        } else {
+            myIdItems.addAll(listOf(item.id!!))
+        }
+
+
+
+
+//        allIdForDeleteItem = listOf(item.id)
+//        Log.d("MyTag", "$allIdForDeleteItem")
     }
 
     override fun onLongClick(item: Item) {
+        myIdItems.add(item.id!!)
         dataModel.recyclerViewDeleteItemId.value = item
         binding.longClickMenu.isVisible = true
         binding.fullScreen.setOnClickListener {
@@ -403,8 +417,8 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
     override fun checkBox(id: Int, checked: Boolean) {
         mItemViewModel.updateCheckboxForItem(id, checked)
-        Log.d("MyTag", "$id")
     }
+
 
     override fun checkBoxCompleted(id: Int, checked: Boolean) {
         mItemViewModel.updateCheckboxForItem(id, checked)

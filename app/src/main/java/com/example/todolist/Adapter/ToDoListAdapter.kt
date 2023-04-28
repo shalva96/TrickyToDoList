@@ -1,6 +1,7 @@
 package com.example.todolist.Adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +26,9 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
 
     inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ToDoItemBinding.bind(view)
+        private var itemForBgChange = ArrayList<Item>()
+
+
 
         @SuppressLint("ResourceAsColor")
         fun setData(item: Item, listener: Listener?) {
@@ -46,15 +50,22 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
 
             binding.itemLayout.setOnClickListener {
                 listener?.onClick(item)
+
+                if (itemForBgChange.contains(item)) {
+                    binding.toDoBackground.setBackgroundColor(Color.WHITE)
+                    itemForBgChange.remove(item)
+                } else {
+                    itemForBgChange.addAll(listOf(item))
+                    binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
+                }
+
             }
             binding.itemLayout.setOnLongClickListener {
+                itemForBgChange.addAll(listOf(item))
+                binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
                 listener?.onLongClick(item)
                 true
             }
-//            binding.checkboxSample.setOnCheckedChangeListener { _ , isChecked ->
-////                item.id?.let { listener?.checkBox(it, isChecked) }
-//                listener?.checkBox(item.id!!, isChecked)
-//            }
             binding.checkboxSample.setOnClickListener {
                 if ( binding.checkboxSample.isChecked ) {
                     listener?.checkBox(item.id!!, true)

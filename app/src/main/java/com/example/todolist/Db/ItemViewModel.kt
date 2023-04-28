@@ -39,13 +39,7 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         return repository.itemCount()
     }
 
-    fun delete(item: Item) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.delete(item)
-        }
-    }
-
-    fun deleteSome(itemId: List<Int?>) {
+    fun deleteSome(itemId: ArrayList<Int>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteSome(itemId)
         }

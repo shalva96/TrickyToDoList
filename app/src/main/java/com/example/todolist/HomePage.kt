@@ -25,11 +25,13 @@ import com.example.todolist.databinding.ToDoItemBinding
 import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::inflate), ToDoListAdapter.Listener, CompletedListAdapter.Listener {
 
     private val dataModel: DataModel by activityViewModels()
+
 
     //Calendar
     private val monthAndYear = SimpleDateFormat("MMM yyyy")
@@ -42,9 +44,6 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
     private var myIdItems = ArrayList<Int>()
-
-    private var idForDeleteItem: Item? = null
-    private var allIdForDeleteItem = emptyList<Int?>()
     private var adapterBinding: ToDoItemBinding? = null
 
 
@@ -102,7 +101,9 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
             mItemViewModel.deleteSome(myIdItems)
 
-            dataModel.backFromAddPage.value = true
+            toDoListAdapter.setBoolean(true)
+
+//            dataModel.backFromAddPage.value = true
 
             binding.longClickMenu.isVisible = false
         }
@@ -377,7 +378,7 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         }
     } // Calendar end!!
 
-    // Interface from HomePageAdapter
+    // Interface from ToDoListAdapter
     override fun onClick(item: Item) {
         if (!binding.longClickMenu.isVisible) {
             dataModel.updateFragment.value = true
@@ -389,12 +390,6 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         } else {
             myIdItems.addAll(listOf(item.id!!))
         }
-
-
-
-
-//        allIdForDeleteItem = listOf(item.id)
-//        Log.d("MyTag", "$allIdForDeleteItem")
     }
 
     override fun onLongClick(item: Item) {

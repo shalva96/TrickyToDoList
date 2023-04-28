@@ -23,12 +23,12 @@ import com.example.todolist.databinding.ToDoItemBinding
 class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<ToDoListAdapter.ToDoListHolder>() {
 
     private var toDoList = emptyList<Item>()
+    private var myBoolean: Boolean = false
+
 
     inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ToDoItemBinding.bind(view)
         private var itemForBgChange = ArrayList<Item>()
-
-
 
         @SuppressLint("ResourceAsColor")
         fun setData(item: Item, listener: Listener?) {
@@ -48,6 +48,11 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
                 8 -> { binding.smallPinkCircle.isVisible = true  }
             }
 
+
+            if (myBoolean) {
+                binding.toDoBackground.setBackgroundColor(Color.WHITE)
+            }
+
             binding.itemLayout.setOnClickListener {
                 listener?.onClick(item)
 
@@ -58,6 +63,8 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
                     itemForBgChange.addAll(listOf(item))
                     binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
                 }
+
+
 
             }
             binding.itemLayout.setOnLongClickListener {
@@ -93,6 +100,10 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
     fun addItem(item: List<Item>) {
             this.toDoList = item
             notifyDataSetChanged()
+    }
+
+    fun setBoolean(value: Boolean) {
+        myBoolean = value
     }
 
     interface Listener {

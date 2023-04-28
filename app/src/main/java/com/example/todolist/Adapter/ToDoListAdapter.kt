@@ -46,6 +46,17 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
                 6 -> { binding.smallPurpleCircle.isVisible = true  }
                 7 -> { binding.smallLightpurpleCircle.isVisible = true  }
                 8 -> { binding.smallPinkCircle.isVisible = true  }
+                else -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
             }
 
 

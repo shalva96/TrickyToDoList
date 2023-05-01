@@ -59,6 +59,38 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
     override fun onClick() {
         clickListener()
+
+        binding.sortBy.setOnClickListener {
+            if (!binding.sortBlock.isVisible) {
+                binding.sortBlock.visibility = View.VISIBLE
+                binding.sortBackground.isVisible = true
+            } else {
+                binding.sortBlock.visibility = View.INVISIBLE
+                binding.sortBackground.isVisible = false
+            }
+        }
+        binding.radioGroup.setOnCheckedChangeListener { radioBtn, checkedId ->
+            when (checkedId) {
+                binding.dateAdded.id -> mItemViewModel.sortByDateAdded.observe(viewLifecycleOwner) { item ->
+                    toDoListAdapter.addItem(item)
+                    binding.sortBlock.visibility = View.INVISIBLE
+                    binding.sortBackground.isVisible = false
+                    binding.sortBy.text = getString(R.string.dateAdded)
+                }
+                binding.dueDate.id -> mItemViewModel.sortByDate.observe(viewLifecycleOwner) { item ->
+                    toDoListAdapter.addItem(item)
+                    binding.sortBlock.visibility = View.INVISIBLE
+                    binding.sortBackground.isVisible = false
+                    binding.sortBy.text = getString(R.string.dueDate)
+                }
+                binding.colorLabel.id -> mItemViewModel.sortByColor.observe(viewLifecycleOwner) { item ->
+                    toDoListAdapter.addItem(item)
+                    binding.sortBlock.visibility = View.INVISIBLE
+                    binding.sortBackground.isVisible = false
+                    binding.sortBy.text = getString(R.string.colorLabel)
+                }
+            }
+        }
     }
 
 
@@ -98,12 +130,8 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
 
         binding.delete.setOnClickListener {
-
             mItemViewModel.deleteSome(myIdItems)
-
             toDoListAdapter.setBoolean(true)
-
-//            dataModel.backFromAddPage.value = true
 
             binding.longClickMenu.isVisible = false
         }
@@ -387,6 +415,9 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
         if (myIdItems.contains(item.id)) {
             myIdItems.remove(item.id)
+            if (myIdItems.isEmpty()) {
+                binding.longClickMenu.isVisible = false
+            }
         } else {
             myIdItems.addAll(listOf(item.id!!))
         }

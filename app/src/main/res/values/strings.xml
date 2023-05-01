@@ -22,6 +22,10 @@
     <string name="addTv">Stuff to do</string>
     <string name="addEditTv">Type your task here</string>
 
+    <string name="dateAdded">Date added</string>
+    <string name="dueDate">Due date</string>
+    <string name="colorLabel">Color label</string>
+
     <string name="strike_text">1.<strike>Complete open water diving certification</strike></string>
 
 

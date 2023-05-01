@@ -14,6 +14,15 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertItem(item: Item)
 
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY dates ASC")
+    fun sortByDate(): LiveData<List<Item>>
+
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY colors DESC")
+    fun sortByColor(): LiveData<List<Item>>
+
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY id ASC")
+    fun sortByDateAdded(): LiveData<List<Item>>
+
     @Query("SELECT (SELECT COUNT(*) FROM items) == 0")
     fun itemCount() : Boolean
 

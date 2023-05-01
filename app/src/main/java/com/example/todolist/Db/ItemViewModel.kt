@@ -10,6 +10,9 @@ import kotlinx.coroutines.launch
 class ItemViewModel(application: Application): AndroidViewModel(application) {
 
     val readAllData: LiveData<List<Item>>
+    val sortByDate: LiveData<List<Item>>
+    val sortByColor: LiveData<List<Item>>
+    val sortByDateAdded: LiveData<List<Item>>
     val unCheck: LiveData<List<Item>>
     val checked: LiveData<List<Item>>
     private val repository: Repository
@@ -18,6 +21,9 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         val getDao = MainDb.getDb(application)?.getDao()
         repository = getDao?.let { Repository(it) }!!
         readAllData = repository.readAllData
+        sortByDate = repository.sortByDate
+        sortByColor = repository.sortByColor
+        sortByDateAdded = repository.sortByDateAdded
         unCheck = repository.unCheck
         checked = repository.checked
 

@@ -20,7 +20,7 @@ interface Dao {
     @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY colors ASC")
     fun sortByColor(): LiveData<List<Item>>
 
-    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY id DESC")
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY id ASC")
     fun sortByDateAdded(): LiveData<List<Item>>
 
     @Query("SELECT (SELECT COUNT(*) FROM items) == 0")
@@ -29,7 +29,7 @@ interface Dao {
     @Query("SELECT * FROM items")
     fun readAllData(): LiveData<List<Item>>
 
-    @Query("SELECT * FROM items WHERE checkbox is 0")
+    @Query("SELECT * FROM items WHERE checkbox is 0 ORDER BY id DESC")
     fun unCheck(): LiveData<List<Item>>
 
     @Query("SELECT * FROM items WHERE checkbox is 1")

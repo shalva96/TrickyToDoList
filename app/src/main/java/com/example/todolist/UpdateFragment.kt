@@ -34,7 +34,7 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
     var color: Int = 9
-    var viewFormatDate: String = " "
+    var viewFormatDate: String = "33"
     var itemId: Int = 0
 
     // Class for chose date
@@ -81,7 +81,7 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
         dataModel.recyclerViewItemId.observe(viewLifecycleOwner) {
             this.itemId = it.id!!
             binding.updateAddEditText.setText(it.text)
-            if (it.date != " ") {
+            if (it.date != "33") {
                 viewFormatDate = it.date
                 color = it.color
                 when(it.color) {

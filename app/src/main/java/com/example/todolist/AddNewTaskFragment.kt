@@ -36,7 +36,7 @@ class AddNewTaskFragment :
     private lateinit var sharedPref: SharedPref
     private lateinit var mItemViewModel: ItemViewModel
     var color: Int = 9
-    private var viewFormatDate: String = " "
+    private var viewFormatDate: String = "33"
 
     // Class for chose date
     class DatePickerFragment(private val dateSelected: DataSelected) : DialogFragment(),

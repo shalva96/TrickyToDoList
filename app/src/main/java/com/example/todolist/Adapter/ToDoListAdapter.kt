@@ -34,8 +34,13 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
         fun setData(item: Item, listener: Listener?) {
             binding.checkboxSample.isChecked = item.checked
             binding.descriptionSample.text = item.text
-            binding.dateSample.text = item.date
-            if (binding.dateSample.text == " ") binding.dateSample.visibility = View.GONE
+            if (item.date != "33") {
+                binding.dateSample.visibility = View.VISIBLE
+                binding.dateSample.text = item.date
+            }
+            if (item.date == "33") {
+                binding.dateSample.visibility = View.GONE
+            }
             when (item.color) {
                 0 -> {
                     binding.smallRedCircle.visibility = View.VISIBLE

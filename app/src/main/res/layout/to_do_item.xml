@@ -165,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="gone"
                 android:text="Due 25 Aug."
                 android:textColor="@color/custom_color_dark"
                 android:textSize="12sp"

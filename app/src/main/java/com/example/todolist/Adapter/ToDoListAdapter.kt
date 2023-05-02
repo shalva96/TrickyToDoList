@@ -37,15 +37,105 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
             binding.dateSample.text = item.date
             if (binding.dateSample.text == " ") binding.dateSample.visibility = View.GONE
             when (item.color) {
-                0 -> { binding.smallRedCircle.isVisible = true }
-                1 -> { binding.smallOrangeCircle.isVisible = true  }
-                2 -> { binding.smallYellowCircle.isVisible = true  }
-                3 -> { binding.smallGreenCircle.isVisible = true }
-                4 -> { binding.smallLightblueCircle.isVisible = true  }
-                5 -> { binding.smallBlueCircle.isVisible = true  }
-                6 -> { binding.smallPurpleCircle.isVisible = true  }
-                7 -> { binding.smallLightpurpleCircle.isVisible = true  }
-                8 -> { binding.smallPinkCircle.isVisible = true  }
+                0 -> {
+                    binding.smallRedCircle.visibility = View.VISIBLE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                1 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.VISIBLE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                2 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.VISIBLE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                3 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.VISIBLE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                4 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.VISIBLE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                5 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.VISIBLE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                6 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.VISIBLE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                7 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.VISIBLE
+                    binding.smallPinkCircle.visibility = View.GONE
+                }
+                8 -> {
+                    binding.smallRedCircle.visibility = View.GONE
+                    binding.smallOrangeCircle.visibility = View.GONE
+                    binding.smallYellowCircle.visibility = View.GONE
+                    binding.smallGreenCircle.visibility = View.GONE
+                    binding.smallLightblueCircle.visibility = View.GONE
+                    binding.smallBlueCircle.visibility = View.GONE
+                    binding.smallPurpleCircle.visibility = View.GONE
+                    binding.smallLightpurpleCircle.visibility = View.GONE
+                    binding.smallPinkCircle.visibility = View.VISIBLE
+                }
                 else -> {
                     binding.smallRedCircle.visibility = View.GONE
                     binding.smallOrangeCircle.visibility = View.GONE
@@ -109,8 +199,9 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
     }
 
     fun addItem(item: List<Item>) {
-            this.toDoList = item
-            notifyDataSetChanged()
+        this.toDoList.toMutableList().clear()
+        this.toDoList = item
+        notifyDataSetChanged()
     }
 
     fun setBoolean(value: Boolean) {

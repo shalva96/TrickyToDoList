@@ -17,10 +17,10 @@ interface Dao {
     @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY dates ASC")
     fun sortByDate(): LiveData<List<Item>>
 
-    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY colors DESC")
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY colors ASC")
     fun sortByColor(): LiveData<List<Item>>
 
-    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY id ASC")
+    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY id DESC")
     fun sortByDateAdded(): LiveData<List<Item>>
 
     @Query("SELECT (SELECT COUNT(*) FROM items) == 0")

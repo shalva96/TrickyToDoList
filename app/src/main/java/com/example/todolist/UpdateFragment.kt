@@ -7,16 +7,12 @@ import android.icu.util.GregorianCalendar
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.Base.BaseFragment
@@ -35,6 +31,7 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
     private lateinit var mItemViewModel: ItemViewModel
     var color: Int = 9
     var viewFormatDate: String = "33"
+    var viewForSortByDate: String = "Z"
     var itemId: Int = 0
 
     // Class for chose date
@@ -126,7 +123,7 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
         val description = binding.updateAddEditText.text.toString()
         if (inputCheck(description)) {
 
-            val updateItem = Item(itemId, false, description, color, "$viewFormatDate")
+            val updateItem = Item(itemId, false, description, color, viewForSortByDate,"$viewFormatDate")
             mItemViewModel.updateItem(updateItem)
             Toast.makeText(requireContext(), "Updated Successfully", Toast.LENGTH_LONG).show()
         } else {
@@ -178,6 +175,35 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
             binding.updateCalendarIcon.visibility = View.VISIBLE
         }
         viewFormatDate = viewFormattedDate
+
+        if (viewFormatDate.contains("Jan")) {
+            viewForSortByDate = "A$viewFormatDate"
+        }else if (viewFormatDate.contains("Feb")) {
+            viewForSortByDate = "B$viewFormatDate"
+        }else if (viewFormatDate.contains("Mar")) {
+            viewForSortByDate = "C$viewFormatDate"
+        }else if (viewFormatDate.contains("Apr")) {
+            viewForSortByDate = "D$viewFormatDate"
+        }else if (viewFormatDate.contains("May")) {
+            viewForSortByDate = "E$viewFormatDate"
+        }else if (viewFormatDate.contains("Jun")) {
+            viewForSortByDate = "F$viewFormatDate"
+        }else if (viewFormatDate.contains("Jul")) {
+            viewForSortByDate = "G$viewFormatDate"
+        }else if (viewFormatDate.contains("Aug")) {
+            viewForSortByDate = "H$viewFormatDate"
+        }else if (viewFormatDate.contains("Sep")) {
+            viewForSortByDate = "I$viewFormatDate"
+        }else if (viewFormatDate.contains("Oct")) {
+            viewForSortByDate = "J0$viewFormatDate"
+        }else if (viewFormatDate.contains("Nov")) {
+            viewForSortByDate = "K1$viewFormatDate"
+        }else if (viewFormatDate.contains("Dec")) {
+            viewForSortByDate = "L2$viewFormatDate"
+        }else {
+            viewForSortByDate = "Z"
+        }
+
 
     }
 

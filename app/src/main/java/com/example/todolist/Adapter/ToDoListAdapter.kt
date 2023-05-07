@@ -19,11 +19,15 @@ import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<ToDoListAdapter.ToDoListHolder>() {
 
     private var toDoList = emptyList<Item>()
     private var myBoolean: Boolean = false
+    private var dateBoolean: Boolean = false
 
 
     inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,13 +38,22 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
         fun setData(item: Item, listener: Listener?) {
             binding.checkboxSample.isChecked = item.checked
             binding.descriptionSample.text = item.text
-            if (item.date != "33") {
+            if (!item.date.equals("33")) {
                 binding.dateSample.visibility = View.VISIBLE
-                binding.dateSample.text = item.date
+                binding.dateSample.text = item.date.toString()
             }
-            if (item.date == "33") {
+            if (item.date.equals("33")) {
                 binding.dateSample.visibility = View.GONE
             }
+
+            if (dateBoolean) {
+                    addItem(toDoList.sortedBy {
+                        it.date
+                    })
+
+            }
+
+
             when (item.color) {
                 0 -> {
                     binding.smallRedCircle.visibility = View.VISIBLE
@@ -211,6 +224,9 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
 
     fun setBoolean(value: Boolean) {
         myBoolean = value
+    }
+    fun sortByDate(value: Boolean) {
+        dateBoolean = value
     }
 
     interface Listener {

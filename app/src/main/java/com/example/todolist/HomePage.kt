@@ -78,6 +78,7 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
                     binding.sortBy.text = getString(R.string.dateAdded)
                 }
                 binding.dueDate.id -> mItemViewModel.sortByDate.observe(viewLifecycleOwner) { item ->
+//                    toDoListAdapter.sortByDate(true)
                     toDoListAdapter.addItem(item)
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false

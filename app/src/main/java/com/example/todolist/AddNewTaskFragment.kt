@@ -135,29 +135,29 @@ class AddNewTaskFragment :
         }
         viewFormatDate = viewFormattedDate
 
-        if (viewFormatDate.contains("Jan")) {
+        if (viewFormatDate.contains("Jan") || viewFormatDate.contains("янв.")) {
             viewForSortByDate = "A$viewFormatDate"
-        }else if (viewFormatDate.contains("Feb")) {
+        }else if (viewFormatDate.contains("Feb") || viewFormatDate.contains("февр.")) {
             viewForSortByDate = "B$viewFormatDate"
-        }else if (viewFormatDate.contains("Mar")) {
+        }else if (viewFormatDate.contains("Mar") || viewFormatDate.contains("мар.")) {
             viewForSortByDate = "C$viewFormatDate"
-        }else if (viewFormatDate.contains("Apr")) {
+        }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апрю")) {
             viewForSortByDate = "D$viewFormatDate"
-        }else if (viewFormatDate.contains("May")) {
+        }else if (viewFormatDate.contains("May") || viewFormatDate.contains("мая")) {
             viewForSortByDate = "E$viewFormatDate"
-        }else if (viewFormatDate.contains("Jun")) {
+        }else if (viewFormatDate.contains("Jun") || viewFormatDate.contains("июн.")) {
             viewForSortByDate = "F$viewFormatDate"
-        }else if (viewFormatDate.contains("Jul")) {
+        }else if (viewFormatDate.contains("Jul") || viewFormatDate.contains("июл.")) {
             viewForSortByDate = "G$viewFormatDate"
-        }else if (viewFormatDate.contains("Aug")) {
+        }else if (viewFormatDate.contains("Aug") || viewFormatDate.contains("авг.")) {
             viewForSortByDate = "H$viewFormatDate"
-        }else if (viewFormatDate.contains("Sep")) {
+        }else if (viewFormatDate.contains("Sep") || viewFormatDate.contains("сент.")) {
             viewForSortByDate = "I$viewFormatDate"
-        }else if (viewFormatDate.contains("Oct")) {
+        }else if (viewFormatDate.contains("Oct") || viewFormatDate.contains("окт.")) {
             viewForSortByDate = "J0$viewFormatDate"
-        }else if (viewFormatDate.contains("Nov")) {
+        }else if (viewFormatDate.contains("Nov") || viewFormatDate.contains("нояб.")) {
             viewForSortByDate = "K1$viewFormatDate"
-        }else if (viewFormatDate.contains("Dec")) {
+        }else if (viewFormatDate.contains("Dec") || viewFormatDate.contains("дек.")) {
             viewForSortByDate = "L2$viewFormatDate"
         }else {
             viewForSortByDate = "Z"

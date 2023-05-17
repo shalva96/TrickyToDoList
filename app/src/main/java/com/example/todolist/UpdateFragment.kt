@@ -80,23 +80,28 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
             binding.updateAddEditText.setText(it.text)
             if (it.date != "33") {
                 viewFormatDate = it.date
-                color = it.color
-                when(it.color) {
-                    0 -> binding.firsOval.isVisible = true
-                    1 -> binding.secondOval.isVisible = true
-                    2 -> binding.threeOval.isVisible = true
-                    3 -> binding.fourOval.isVisible = true
-                    4 -> binding.fiveOval.isVisible = true
-                    5 -> binding.sixOval.isVisible = true
-                    6 -> binding.sevenOval.isVisible = true
-                    7 -> binding.eightOval.isVisible = true
-                    8 -> binding.nineOval.isVisible = true
-                }
                 binding.updateCalendarIcon.visibility = View.GONE
                 binding.updateChoseDate.visibility = View.VISIBLE
                 binding.updateSelectedDate.text = it.date
+            }else {
+
+                binding.updateCalendarIcon.visibility = View.VISIBLE
+                binding.updateChoseDate.visibility = View.GONE
+            }
+            color = it.color
+            when(it.color) {
+                0 -> binding.firsOval.isVisible = true
+                1 -> binding.secondOval.isVisible = true
+                2 -> binding.threeOval.isVisible = true
+                3 -> binding.fourOval.isVisible = true
+                4 -> binding.fiveOval.isVisible = true
+                5 -> binding.sixOval.isVisible = true
+                6 -> binding.sevenOval.isVisible = true
+                7 -> binding.eightOval.isVisible = true
+                8 -> binding.nineOval.isVisible = true
             }
             binding.updateCleanDate.setOnClickListener {
+                viewFormatDate = "33"
                 binding.updateChoseDate.visibility = View.GONE
                 binding.updateCalendarIcon.visibility = View.VISIBLE
             }
@@ -182,7 +187,7 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
             viewForSortByDate = "B $viewFormatDate"
         }else if (viewFormatDate.contains("Mar") || viewFormatDate.contains("мар.")) {
             viewForSortByDate = "C $viewFormatDate"
-        }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апрю")) {
+        }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апр.")) {
             viewForSortByDate = "D $viewFormatDate"
         }else if (viewFormatDate.contains("May") || viewFormatDate.contains("мая")) {
             viewForSortByDate = "E $viewFormatDate"

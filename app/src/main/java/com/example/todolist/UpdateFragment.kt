@@ -186,7 +186,6 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
 
 
     private fun sortByDueDate() {
-        if (viewFormatDate != "33") {
             if (viewFormatDate.contains("Jan") || viewFormatDate.contains("янв.")) {
                 viewForSortByDate = "A $viewFormatDate"
             } else if (viewFormatDate.contains("Feb") || viewFormatDate.contains("февр.")) {
@@ -214,7 +213,6 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
             } else {
                 viewForSortByDate = "Z $viewFormatDate"
             }
-        }
     }
 
 

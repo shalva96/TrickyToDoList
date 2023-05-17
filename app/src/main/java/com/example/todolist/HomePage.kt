@@ -1,15 +1,9 @@
 package com.example.todolist
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isEmpty
+import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
-import androidx.core.view.size
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,12 +11,9 @@ import com.example.todolist.Adapter.CompletedListAdapter
 import com.example.todolist.Adapter.ToDoListAdapter
 import com.example.todolist.Base.BaseFragment
 import com.example.todolist.DataClass.DataModel
-import com.example.todolist.Db.Dao
 import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.databinding.FragmentHomePageBinding
-import com.example.todolist.databinding.ToDoItemBinding
-import com.example.todolist.sharedPref.SharedPref
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,7 +35,7 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
     private var myIdItems = ArrayList<Int>()
-    private var adapterBinding: ToDoItemBinding? = null
+//    private var adapterBinding: ToDoItemBinding? = null
 
 
     private lateinit var toDoListAdapter: ToDoListAdapter
@@ -428,17 +419,21 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         myIdItems.add(item.id!!)
         dataModel.recyclerViewDeleteItemId.value = item
         binding.longClickMenu.isVisible = true
+        val animationSlideUp = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
+        binding.longClickMenu.startAnimation(animationSlideUp)
         binding.fullScreen.setOnClickListener {
             binding.longClickMenu.isVisible = false
         }
         binding.done.setOnClickListener {
             mItemViewModel.updateCheckboxForItem(itemId = item.id!!, true)
             binding.longClickMenu.isVisible = false
+            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.longClickMenu.startAnimation(animationSlideDown)
         }
 
-        adapterBinding?.toDoBackground?.setOnClickListener {
-            dataModel.recyclerViewDeleteItemId.value = item
-        }
+//        adapterBinding?.toDoBackground?.setOnClickListener {
+//            dataModel.recyclerViewDeleteItemId.value = item
+//        }
 
     }
 

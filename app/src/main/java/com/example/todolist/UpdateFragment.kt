@@ -177,31 +177,31 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
         viewFormatDate = viewFormattedDate
 
         if (viewFormatDate.contains("Jan") || viewFormatDate.contains("янв.")) {
-            viewForSortByDate = "A$viewFormatDate"
+            viewForSortByDate = "A $viewFormatDate"
         }else if (viewFormatDate.contains("Feb") || viewFormatDate.contains("февр.")) {
-            viewForSortByDate = "B$viewFormatDate"
+            viewForSortByDate = "B $viewFormatDate"
         }else if (viewFormatDate.contains("Mar") || viewFormatDate.contains("мар.")) {
-            viewForSortByDate = "C$viewFormatDate"
+            viewForSortByDate = "C $viewFormatDate"
         }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апрю")) {
-            viewForSortByDate = "D$viewFormatDate"
+            viewForSortByDate = "D $viewFormatDate"
         }else if (viewFormatDate.contains("May") || viewFormatDate.contains("мая")) {
-            viewForSortByDate = "E$viewFormatDate"
+            viewForSortByDate = "E $viewFormatDate"
         }else if (viewFormatDate.contains("Jun") || viewFormatDate.contains("июн.")) {
-            viewForSortByDate = "F$viewFormatDate"
+            viewForSortByDate = "F $viewFormatDate"
         }else if (viewFormatDate.contains("Jul") || viewFormatDate.contains("июл.")) {
-            viewForSortByDate = "G$viewFormatDate"
+            viewForSortByDate = "G $viewFormatDate"
         }else if (viewFormatDate.contains("Aug") || viewFormatDate.contains("авг.")) {
-            viewForSortByDate = "H$viewFormatDate"
+            viewForSortByDate = "H $viewFormatDate"
         }else if (viewFormatDate.contains("Sep") || viewFormatDate.contains("сент.")) {
-            viewForSortByDate = "I$viewFormatDate"
+            viewForSortByDate = "I $viewFormatDate"
         }else if (viewFormatDate.contains("Oct") || viewFormatDate.contains("окт.")) {
-            viewForSortByDate = "J0$viewFormatDate"
+            viewForSortByDate = "J $viewFormatDate"
         }else if (viewFormatDate.contains("Nov") || viewFormatDate.contains("нояб.")) {
-            viewForSortByDate = "K1$viewFormatDate"
+            viewForSortByDate = "K $viewFormatDate"
         }else if (viewFormatDate.contains("Dec") || viewFormatDate.contains("дек.")) {
-            viewForSortByDate = "L2$viewFormatDate"
+            viewForSortByDate = "L $viewFormatDate"
         }else {
-            viewForSortByDate = "Z"
+            viewForSortByDate = "Z $viewFormatDate"
         }
 
 

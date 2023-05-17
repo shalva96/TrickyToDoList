@@ -141,7 +141,7 @@ class AddNewTaskFragment :
             viewForSortByDate = "B$viewFormatDate"
         }else if (viewFormatDate.contains("Mar") || viewFormatDate.contains("мар.")) {
             viewForSortByDate = "C$viewFormatDate"
-        }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апрю")) {
+        }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апр.")) {
             viewForSortByDate = "D$viewFormatDate"
         }else if (viewFormatDate.contains("May") || viewFormatDate.contains("мая")) {
             viewForSortByDate = "E$viewFormatDate"

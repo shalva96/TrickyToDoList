@@ -14,11 +14,6 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertItem(item: Item)
 
-//    @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY strftime('%Y-%m-%d', dates) ASC")
-//    fun sortByDate(): LiveData<List<Item>>
-
-
-
     @Query("SELECT * FROM items WHERE checkbox = 0 ORDER BY sortDates ASC")
     fun sortByDate(): LiveData<List<Item>>
 

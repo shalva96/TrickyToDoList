@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPref: SharedPref
     private val dataModel: DataModel by viewModels()
     private lateinit var mItemViewModel: ItemViewModel
-    private lateinit var db: MainDb
 
 
 

@@ -127,7 +127,7 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
     private fun updateItem() {
         val description = binding.updateAddEditText.text.toString()
         if (inputCheck(description)) {
-
+            sortByDueDate()
             val updateItem = Item(itemId, false, description, color, viewForSortByDate,"$viewFormatDate")
             mItemViewModel.updateItem(updateItem)
             Toast.makeText(requireContext(), "Updated Successfully", Toast.LENGTH_LONG).show()
@@ -181,35 +181,40 @@ class UpdateFragment() : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBindi
         }
         viewFormatDate = viewFormattedDate
 
-        if (viewFormatDate.contains("Jan") || viewFormatDate.contains("янв.")) {
-            viewForSortByDate = "A $viewFormatDate"
-        }else if (viewFormatDate.contains("Feb") || viewFormatDate.contains("февр.")) {
-            viewForSortByDate = "B $viewFormatDate"
-        }else if (viewFormatDate.contains("Mar") || viewFormatDate.contains("мар.")) {
-            viewForSortByDate = "C $viewFormatDate"
-        }else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апр.")) {
-            viewForSortByDate = "D $viewFormatDate"
-        }else if (viewFormatDate.contains("May") || viewFormatDate.contains("мая")) {
-            viewForSortByDate = "E $viewFormatDate"
-        }else if (viewFormatDate.contains("Jun") || viewFormatDate.contains("июн.")) {
-            viewForSortByDate = "F $viewFormatDate"
-        }else if (viewFormatDate.contains("Jul") || viewFormatDate.contains("июл.")) {
-            viewForSortByDate = "G $viewFormatDate"
-        }else if (viewFormatDate.contains("Aug") || viewFormatDate.contains("авг.")) {
-            viewForSortByDate = "H $viewFormatDate"
-        }else if (viewFormatDate.contains("Sep") || viewFormatDate.contains("сент.")) {
-            viewForSortByDate = "I $viewFormatDate"
-        }else if (viewFormatDate.contains("Oct") || viewFormatDate.contains("окт.")) {
-            viewForSortByDate = "J $viewFormatDate"
-        }else if (viewFormatDate.contains("Nov") || viewFormatDate.contains("нояб.")) {
-            viewForSortByDate = "K $viewFormatDate"
-        }else if (viewFormatDate.contains("Dec") || viewFormatDate.contains("дек.")) {
-            viewForSortByDate = "L $viewFormatDate"
-        }else {
-            viewForSortByDate = "Z $viewFormatDate"
+
+    }
+
+
+    private fun sortByDueDate() {
+        if (viewFormatDate != "33") {
+            if (viewFormatDate.contains("Jan") || viewFormatDate.contains("янв.")) {
+                viewForSortByDate = "A $viewFormatDate"
+            } else if (viewFormatDate.contains("Feb") || viewFormatDate.contains("февр.")) {
+                viewForSortByDate = "B $viewFormatDate"
+            } else if (viewFormatDate.contains("Mar") || viewFormatDate.contains("мар.")) {
+                viewForSortByDate = "C $viewFormatDate"
+            } else if (viewFormatDate.contains("Apr") || viewFormatDate.contains("апр.")) {
+                viewForSortByDate = "D $viewFormatDate"
+            } else if (viewFormatDate.contains("May") || viewFormatDate.contains("мая")) {
+                viewForSortByDate = "E $viewFormatDate"
+            } else if (viewFormatDate.contains("Jun") || viewFormatDate.contains("июн.")) {
+                viewForSortByDate = "F $viewFormatDate"
+            } else if (viewFormatDate.contains("Jul") || viewFormatDate.contains("июл.")) {
+                viewForSortByDate = "G $viewFormatDate"
+            } else if (viewFormatDate.contains("Aug") || viewFormatDate.contains("авг.")) {
+                viewForSortByDate = "H $viewFormatDate"
+            } else if (viewFormatDate.contains("Sep") || viewFormatDate.contains("сент.")) {
+                viewForSortByDate = "I $viewFormatDate"
+            } else if (viewFormatDate.contains("Oct") || viewFormatDate.contains("окт.")) {
+                viewForSortByDate = "J $viewFormatDate"
+            } else if (viewFormatDate.contains("Nov") || viewFormatDate.contains("нояб.")) {
+                viewForSortByDate = "K $viewFormatDate"
+            } else if (viewFormatDate.contains("Dec") || viewFormatDate.contains("дек.")) {
+                viewForSortByDate = "L $viewFormatDate"
+            } else {
+                viewForSortByDate = "Z $viewFormatDate"
+            }
         }
-
-
     }
 
 

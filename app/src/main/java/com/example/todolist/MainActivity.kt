@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun openFrag(f: Fragment, idHolder: Int) {
         supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(R.anim.slide_right, R.anim.slide_left)
             .replace(idHolder, f)
             .commit()
     }

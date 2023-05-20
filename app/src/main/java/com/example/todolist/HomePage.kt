@@ -35,7 +35,6 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     private var prevMonth = calendar.get(Calendar.MONTH)//Prev month
     private var prevMonthDays = 0
     private var myIdItems = ArrayList<Int>()
-//    private var adapterBinding: ToDoItemBinding? = null
 
 
     private lateinit var toDoListAdapter: ToDoListAdapter
@@ -55,10 +54,19 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             if (!binding.sortBlock.isVisible) {
                 binding.sortBlock.visibility = View.VISIBLE
                 binding.sortBackground.isVisible = true
-            } else {
-                binding.sortBlock.visibility = View.INVISIBLE
-                binding.sortBackground.isVisible = false
+                val bgAnimIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+                val sortAnimIn = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
+                binding.sortBlock.startAnimation(sortAnimIn)
+                binding.sortBackground.startAnimation(bgAnimIn)
             }
+        }
+        binding.sortBackground.setOnClickListener {
+            binding.sortBlock.visibility = View.INVISIBLE
+            binding.sortBackground.isVisible = false
+            val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+            val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.sortBlock.startAnimation(sortAnimOut)
+            binding.sortBackground.startAnimation(bgAnimOut)
         }
         binding.radioGroup.setOnCheckedChangeListener { radioBtn, checkedId ->
             when (checkedId) {
@@ -67,19 +75,30 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false
                     binding.sortBy.text = getString(R.string.dateAdded)
+                    val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+                    val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+                    binding.sortBlock.startAnimation(sortAnimOut)
+                    binding.sortBackground.startAnimation(bgAnimOut)
                 }
                 binding.dueDate.id -> mItemViewModel.sortByDate.observe(viewLifecycleOwner) { item ->
-//                    toDoListAdapter.sortByDate(true)
                     toDoListAdapter.addItem(item)
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false
                     binding.sortBy.text = getString(R.string.dueDate)
+                    val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+                    val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+                    binding.sortBlock.startAnimation(sortAnimOut)
+                    binding.sortBackground.startAnimation(bgAnimOut)
                 }
                 binding.colorLabel.id -> mItemViewModel.sortByColor.observe(viewLifecycleOwner) { item ->
                     toDoListAdapter.addItem(item)
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false
                     binding.sortBy.text = getString(R.string.colorLabel)
+                    val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+                    val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+                    binding.sortBlock.startAnimation(sortAnimOut)
+                    binding.sortBackground.startAnimation(bgAnimOut)
                 }
             }
         }
@@ -118,17 +137,23 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
         binding.homeNewTask.setOnClickListener {
             dataModel.newTaskFromHomePage.value = true
+
+
         }
 
 
         binding.delete.setOnClickListener {
             mItemViewModel.deleteSome(myIdItems)
             toDoListAdapter.setBoolean(true)
-
             binding.longClickMenu.isVisible = false
+            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.longClickMenu.startAnimation(animationSlideDown)
         }
         binding.XVector.setOnClickListener {
+            toDoListAdapter.setBoolean(true)
             binding.longClickMenu.isVisible = false
+            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.longClickMenu.startAnimation(animationSlideDown)
         }
     }
 
@@ -409,6 +434,8 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             myIdItems.remove(item.id)
             if (myIdItems.isEmpty()) {
                 binding.longClickMenu.isVisible = false
+                val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+                binding.longClickMenu.startAnimation(animationSlideDown)
             }
         } else {
             myIdItems.addAll(listOf(item.id!!))
@@ -429,12 +456,8 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             binding.longClickMenu.isVisible = false
             val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
             binding.longClickMenu.startAnimation(animationSlideDown)
+            toDoListAdapter.setBoolean(true)
         }
-
-//        adapterBinding?.toDoBackground?.setOnClickListener {
-//            dataModel.recyclerViewDeleteItemId.value = item
-//        }
-
     }
 
     override fun checkBox(id: Int, checked: Boolean) {

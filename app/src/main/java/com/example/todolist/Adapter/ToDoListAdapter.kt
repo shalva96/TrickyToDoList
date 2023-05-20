@@ -40,19 +40,11 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
             binding.descriptionSample.text = item.text
             if (!item.date.equals("33")) {
                 binding.dateSample.visibility = View.VISIBLE
-                binding.dateSample.text = item.date.toString()
+                binding.dateSample.text = item.date
             }
             if (item.date.equals("33")) {
                 binding.dateSample.visibility = View.GONE
             }
-
-            if (dateBoolean) {
-                    addItem(toDoList.sortedBy {
-                        it.date
-                    })
-
-            }
-
 
             when (item.color) {
                 0 -> {
@@ -180,7 +172,7 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
                     itemForBgChange.remove(item)
                 } else {
                     itemForBgChange.addAll(listOf(item))
-                    binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
+                    binding.toDoBackground.setBackgroundResource(R.drawable.to_do_list_bg)
                 }
 
 
@@ -188,7 +180,7 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
             }
             binding.itemLayout.setOnLongClickListener {
                 itemForBgChange.addAll(listOf(item))
-                binding.toDoBackground.setBackgroundColor(R.drawable.to_do_list_bg)
+                binding.toDoBackground.setBackgroundResource(R.drawable.to_do_list_bg)
                 listener?.onLongClick(item)
                 true
             }
@@ -224,9 +216,6 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
 
     fun setBoolean(value: Boolean) {
         myBoolean = value
-    }
-    fun sortByDate(value: Boolean) {
-        dateBoolean = value
     }
 
     interface Listener {

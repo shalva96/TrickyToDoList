@@ -1,6 +1,7 @@
 package com.example.todolist.Adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
@@ -19,6 +20,7 @@ import com.example.todolist.Db.Item
 import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.R
 import com.example.todolist.databinding.ToDoItemBinding
+import com.google.android.material.animation.AnimationUtils
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,8 +29,6 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
 
     private var toDoList = emptyList<Item>()
     private var myBoolean: Boolean = false
-    private var dateBoolean: Boolean = false
-
 
     inner class ToDoListHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ToDoItemBinding.bind(view)

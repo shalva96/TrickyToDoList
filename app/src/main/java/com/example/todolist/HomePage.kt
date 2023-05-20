@@ -75,32 +75,24 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false
                     binding.sortBy.text = getString(R.string.dateAdded)
-                    val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
-                    val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-                    binding.sortBlock.startAnimation(sortAnimOut)
-                    binding.sortBackground.startAnimation(bgAnimOut)
                 }
                 binding.dueDate.id -> mItemViewModel.sortByDate.observe(viewLifecycleOwner) { item ->
                     toDoListAdapter.addItem(item)
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false
                     binding.sortBy.text = getString(R.string.dueDate)
-                    val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
-                    val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-                    binding.sortBlock.startAnimation(sortAnimOut)
-                    binding.sortBackground.startAnimation(bgAnimOut)
                 }
                 binding.colorLabel.id -> mItemViewModel.sortByColor.observe(viewLifecycleOwner) { item ->
                     toDoListAdapter.addItem(item)
                     binding.sortBlock.visibility = View.INVISIBLE
                     binding.sortBackground.isVisible = false
                     binding.sortBy.text = getString(R.string.colorLabel)
-                    val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
-                    val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-                    binding.sortBlock.startAnimation(sortAnimOut)
-                    binding.sortBackground.startAnimation(bgAnimOut)
                 }
             }
+            val bgAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+            val sortAnimOut = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.sortBlock.startAnimation(sortAnimOut)
+            binding.sortBackground.startAnimation(bgAnimOut)
         }
     }
 
@@ -134,13 +126,9 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
 
     @SuppressLint("ResourceAsColor")
     private fun clickListener() {
-
         binding.homeNewTask.setOnClickListener {
             dataModel.newTaskFromHomePage.value = true
-
-
         }
-
 
         binding.delete.setOnClickListener {
             mItemViewModel.deleteSome(myIdItems)

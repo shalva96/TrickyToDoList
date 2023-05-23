@@ -102,10 +102,12 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     }
 
     private fun init() {
+        val adapterAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_right)
         val toDoRecyclerView = binding.todoRecyclerView
         toDoListAdapter = ToDoListAdapter(this)
         toDoRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         toDoRecyclerView.adapter = toDoListAdapter
+        binding.todoRecyclerView.startAnimation(adapterAnim)
 
         val completedRecyclerView = binding.completedRecyclerView
         completedListAdapter = CompletedListAdapter(this)

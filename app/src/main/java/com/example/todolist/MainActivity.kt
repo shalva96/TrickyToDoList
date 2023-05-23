@@ -1,5 +1,7 @@
 package com.example.todolist
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -14,6 +16,8 @@ import com.example.todolist.Db.ItemViewModel
 import com.example.todolist.Db.MainDb
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.sharedPref.SharedPref
+import java.util.*
+import java.util.Locale.ENGLISH
 import kotlin.math.log
 
 
@@ -30,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         sharedPref = SharedPref(this)
 
         if (sharedPref.getValue() && sharedPref.getValueDB()){

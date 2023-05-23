@@ -140,8 +140,8 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             binding.longClickMenu.startAnimation(animationSlideDown)
         }
         binding.XVector.setOnClickListener {
-            toDoListAdapter.setBoolean(true)
             binding.longClickMenu.isVisible = false
+            toDoListAdapter.setBoolean(true)
             val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
             binding.longClickMenu.startAnimation(animationSlideDown)
         }

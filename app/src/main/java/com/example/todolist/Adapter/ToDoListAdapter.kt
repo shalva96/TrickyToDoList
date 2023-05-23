@@ -13,6 +13,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.DataClass.DataModel
 import com.example.todolist.Db.Dao
@@ -160,10 +161,6 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
             }
 
 
-            if (myBoolean) {
-                binding.toDoBackground.setBackgroundColor(Color.WHITE)
-            }
-
             binding.itemLayout.setOnClickListener {
                 listener?.onClick(item)
 
@@ -174,8 +171,6 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
                     itemForBgChange.addAll(listOf(item))
                     binding.toDoBackground.setBackgroundResource(R.drawable.to_do_list_bg)
                 }
-
-
 
             }
             binding.itemLayout.setOnLongClickListener {
@@ -188,6 +183,10 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
                 if ( binding.checkboxSample.isChecked ) {
                     listener?.checkBox(item.id!!, true)
                 }
+            }
+            if (myBoolean) {
+                binding.toDoBackground.setBackgroundColor(Color.WHITE)
+                itemForBgChange.clear()
             }
         }
     }
@@ -216,7 +215,10 @@ class ToDoListAdapter(private val listener: Listener?) : RecyclerView.Adapter<To
 
     fun setBoolean(value: Boolean) {
         myBoolean = value
+
     }
+
+
 
     interface Listener {
         fun onClick(item: Item)

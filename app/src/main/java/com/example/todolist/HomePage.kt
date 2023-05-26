@@ -48,7 +48,30 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
     }
 
     override fun onClick() {
-        clickListener()
+        binding.homeNewTask.setOnClickListener {
+            dataModel.newTaskFromHomePage.value = true
+        }
+
+        binding.delete.setOnClickListener {
+            mItemViewModel.deleteSome(myIdItems)
+            toDoListAdapter.setBoolean(true)
+            binding.longClickMenu.isVisible = false
+            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.longClickMenu.startAnimation(animationSlideDown)
+        }
+        binding.done.setOnClickListener {
+            mItemViewModel.updateCheckboxBtnDone(myIdItems)
+            binding.longClickMenu.isVisible = false
+            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.longClickMenu.startAnimation(animationSlideDown)
+            toDoListAdapter.setBoolean(true)
+        }
+        binding.XVector.setOnClickListener {
+            binding.longClickMenu.isVisible = false
+            toDoListAdapter.setBoolean(true)
+            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+            binding.longClickMenu.startAnimation(animationSlideDown)
+        }
 
         binding.sortBy.setOnClickListener {
             if (!binding.sortBlock.isVisible) {
@@ -94,6 +117,7 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             binding.sortBlock.startAnimation(sortAnimOut)
             binding.sortBackground.startAnimation(bgAnimOut)
         }
+
     }
 
 
@@ -124,27 +148,6 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
             completedListAdapter.addItem(item)
         }
 
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private fun clickListener() {
-        binding.homeNewTask.setOnClickListener {
-            dataModel.newTaskFromHomePage.value = true
-        }
-
-        binding.delete.setOnClickListener {
-            mItemViewModel.deleteSome(myIdItems)
-            toDoListAdapter.setBoolean(true)
-            binding.longClickMenu.isVisible = false
-            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-            binding.longClickMenu.startAnimation(animationSlideDown)
-        }
-        binding.XVector.setOnClickListener {
-            binding.longClickMenu.isVisible = false
-            toDoListAdapter.setBoolean(true)
-            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-            binding.longClickMenu.startAnimation(animationSlideDown)
-        }
     }
 
     @SuppressLint("ResourceAsColor")
@@ -441,13 +444,13 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         binding.fullScreen.setOnClickListener {
             binding.longClickMenu.isVisible = false
         }
-        binding.done.setOnClickListener {
-            mItemViewModel.updateCheckboxForItem(itemId = item.id!!, true)
-            binding.longClickMenu.isVisible = false
-            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-            binding.longClickMenu.startAnimation(animationSlideDown)
-            toDoListAdapter.setBoolean(true)
-        }
+//        binding.done.setOnClickListener {
+//            mItemViewModel.updateCheckboxForItem(itemId = item.id!!, true)
+//            binding.longClickMenu.isVisible = false
+//            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
+//            binding.longClickMenu.startAnimation(animationSlideDown)
+//            toDoListAdapter.setBoolean(true)
+//        }
     }
 
     override fun checkBox(id: Int, checked: Boolean) {

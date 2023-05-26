@@ -41,6 +41,11 @@ interface Dao {
     @Query("UPDATE items SET checkbox = :checkboxValue WHERE id is :itemId")
     suspend fun updateCheckboxForItem(itemId: Int, checkboxValue: Boolean)
 
+
+    @Query("UPDATE items SET checkbox = 1 WHERE id IN (:itemId)")
+    suspend fun updateCheckboxBtnDone(itemId: ArrayList<Int>)
+
+
     @Query("DELETE FROM items WHERE id IN (:itemId)")
     suspend fun deleteSome(itemId: ArrayList<Int>)
 

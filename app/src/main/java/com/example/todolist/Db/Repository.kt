@@ -31,4 +31,8 @@ class Repository(private val getDao: Dao) {
         getDao.updateCheckboxForItem(itemId, checkboxValue)
     }
 
+    suspend fun updateCheckboxBtnDone(itemId: ArrayList<Int>) {
+        getDao.updateCheckboxBtnDone(itemId)
+    }
+
 }

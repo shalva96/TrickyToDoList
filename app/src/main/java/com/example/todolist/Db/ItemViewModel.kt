@@ -57,4 +57,10 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun updateCheckboxBtnDone(itemId: ArrayList<Int>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateCheckboxBtnDone(itemId)
+        }
+    }
+
 }

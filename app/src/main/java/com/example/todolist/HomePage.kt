@@ -68,9 +68,9 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         }
         binding.XVector.setOnClickListener {
             binding.longClickMenu.isVisible = false
-            toDoListAdapter.setBoolean(true)
             val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
             binding.longClickMenu.startAnimation(animationSlideDown)
+            toDoListAdapter.setBoolean(true)
         }
 
         binding.sortBy.setOnClickListener {
@@ -444,13 +444,7 @@ class HomePage : BaseFragment<FragmentHomePageBinding>(FragmentHomePageBinding::
         binding.fullScreen.setOnClickListener {
             binding.longClickMenu.isVisible = false
         }
-//        binding.done.setOnClickListener {
-//            mItemViewModel.updateCheckboxForItem(itemId = item.id!!, true)
-//            binding.longClickMenu.isVisible = false
-//            val animationSlideDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down)
-//            binding.longClickMenu.startAnimation(animationSlideDown)
-//            toDoListAdapter.setBoolean(true)
-//        }
+
     }
 
     override fun checkBox(id: Int, checked: Boolean) {
